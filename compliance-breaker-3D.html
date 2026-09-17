@@ -1,0 +1,463 @@
+<!doctype html>
+<html lang="ko"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"><meta name="theme-color" content="#050914"><meta name="description" content="Break through risk in a luminous 3D arcade. Five languages, compliance challenges, combos, power-ups, and a reactor boss."><title>Compliance Breaker — Neon Protocol</title>
+<style>
+:root{color-scheme:dark;--cyan:#63f7ff;--pink:#ff5498;--ink:#060b16;--muted:#98aabc;--line:#334458;--gold:#ffd27a}*{box-sizing:border-box}html,body{margin:0;width:100%;height:100%;overflow:hidden;background:var(--ink);color:#effbff;font-family:Inter,"Pretendard","Malgun Gothic",system-ui,sans-serif}button,select{font:inherit}button{color:inherit;cursor:pointer;touch-action:manipulation}button:focus-visible,select:focus-visible{outline:2px solid var(--cyan);outline-offset:4px}button:disabled{cursor:default;opacity:.42}button,.panel{border:1px solid #54758b55}button{background:#152236;border-radius:10px;padding:12px 17px;transition:background .15s,transform .15s}button:hover{background:#223c51}button:active{transform:scale(.97)}[hidden]{display:none!important}#scene{display:block;width:100%;height:100%;touch-action:none}.vignette{position:absolute;inset:0;pointer-events:none;background:radial-gradient(ellipse at 50% 50%,transparent 40%,#03070c99 100%)}#app{position:absolute;inset:0;pointer-events:none;overflow:hidden}.top{display:flex;justify-content:space-between;align-items:center;gap:20px;padding:max(22px,env(safe-area-inset-top)) 30px 15px;background:linear-gradient(#060b16ed,transparent)}.brand{display:flex;gap:12px;align-items:center}.emblem{font-size:27px;color:var(--cyan);font-weight:900}.brand strong{font-size:14px;letter-spacing:2px;display:block}.brand small{display:block;font-size:12px;letter-spacing:4px;color:var(--muted);margin-top:4px}.top-actions{display:flex;gap:8px;pointer-events:auto}.icon-btn{height:42px;min-width:44px;padding:8px 12px;background:#0a1526c9}.hud{position:absolute;top:98px;left:30px;display:grid;gap:24px;max-width:200px}.eyebrow{font-size:12px;letter-spacing:2px;text-transform:uppercase;color:var(--muted);font-weight:650}.score{font-variant-numeric:tabular-nums;font-size:38px;font-weight:800;letter-spacing:-1px;margin-top:2px}.best{font-size:12px;color:var(--muted);margin-top:3px}.stage-value{font-size:23px;font-weight:750;margin:4px 0}.stage-value small{font-size:14px;color:var(--muted);font-weight:400}.meter{height:3px;background:#1e3349;margin-top:9px;width:150px}.meter>i{display:block;background:var(--cyan);width:0;height:100%;box-shadow:0 0 10px #54eeff88;transition:width .2s}.life{color:var(--cyan);font-size:21px;letter-spacing:5px;line-height:1.8}.muted{color:var(--muted)}.risk{position:absolute;top:108px;right:28px;width:155px}.risk-list{margin-top:15px;display:grid;gap:11px}.risk-item{font-size:13px;color:#bdccda;display:flex;gap:9px;align-items:center}.risk-dot{width:5px;height:17px;flex:none;border-radius:2px;box-shadow:0 0 12px currentColor}.risk-item.done{opacity:.3}.quiz-stat{margin-top:22px;border-top:1px solid #26374b;padding-top:16px;font-size:14px}.bottom{position:absolute;left:30px;right:30px;bottom:max(20px,env(safe-area-inset-bottom));display:flex;justify-content:space-between;align-items:end;gap:18px}.control-hint{font-size:13px;color:#a4b5c7;line-height:1.9;max-width:270px}.control-hint kbd{border:1px solid #435769;border-radius:4px;padding:2px 5px;color:#d8f4ff;font-family:inherit;font-size:12px}.power-controls{display:flex;gap:10px;pointer-events:auto}.ability{background:#0c1a2ce8;position:relative;min-width:160px;text-align:left;padding:12px 15px;overflow:hidden}.ability strong{display:block;font-size:14px;letter-spacing:1px}.ability small{font-size:12px;color:#9cb5c8;display:block;margin-top:5px}.ability em{height:2px;background:var(--cyan);position:absolute;bottom:0;left:0;width:0;box-shadow:0 0 12px var(--cyan);transition:width .2s}.ability.ready{border-color:#63f7ffbb;box-shadow:0 0 28px #3cceff22}.ability.ready strong{color:var(--cyan)}#launch{min-width:150px;background:#bafaff;color:#042033;border-color:#bafaff;text-align:center;font-weight:800}.center-note{position:absolute;top:23%;left:50%;transform:translateX(-50%);text-align:center;width:80%;pointer-events:none}#combo{font-size:45px;font-weight:900;color:var(--gold);text-shadow:0 0 30px #ffba4555;opacity:0;transition:opacity .18s;letter-spacing:-1px}#combo span{font-size:14px;display:block;letter-spacing:4px;color:#eac77f}#toast{font-size:14px;line-height:1.5;margin:auto;margin-top:12px;padding:8px 17px;background:#06111ccc;border:1px solid #4a687f77;border-radius:30px;max-width:fit-content;opacity:0;transition:opacity .2s}#buffs{position:absolute;left:50%;bottom:100px;transform:translateX(-50%);display:flex;gap:8px;flex-wrap:wrap;justify-content:center;width:85%;font-size:12px}.buff{background:#091b30db;border:1px solid #5effd955;color:#8fffe0;padding:5px 10px;border-radius:5px}#bossHud{position:absolute;top:100px;width:260px;left:50%;transform:translateX(-50%);text-align:center}.boss-label{font-size:12px;letter-spacing:2px;color:#ff90b2}.boss-track{height:5px;background:#431c39;margin-top:8px}.boss-track i{display:block;height:100%;background:#ff589d;box-shadow:0 0 15px #ff589d;width:100%}.overlay{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;pointer-events:auto;padding:24px;background:#0208129c;backdrop-filter:blur(7px);z-index:10}.panel{background:linear-gradient(135deg,#13253df5,#080f1afc);border-radius:22px;padding:30px;max-width:510px;width:100%;max-height:calc(100dvh - 48px);overflow:auto;box-shadow:0 25px 90px #0007}.panel h2{font-size:30px;letter-spacing:-1px;margin:10px 0 14px;line-height:1.2}.panel p{color:#aec0d1;font-size:16px;line-height:1.65}.panel .btn-primary{width:100%;background:var(--cyan);color:#09202e;font-weight:800;padding:15px;margin-top:12px;border:0}.btn-secondary{width:100%;margin-top:10px;background:transparent}.intro-overlay{justify-content:flex-start;background:linear-gradient(90deg,#040a14f5, #040a148c 38%,transparent 68%);backdrop-filter:none;pointer-events:none}.intro{pointer-events:auto;max-width:470px;margin-left:6vw;border:0;background:transparent;box-shadow:none;padding:25px 0}.intro h1{font-size:clamp(46px,5.8vw,86px);line-height:.94;font-weight:900;letter-spacing:-4px;margin:24px 0}.intro h1 span{color:var(--cyan);text-shadow:0 0 40px #50e2ff33}.intro .overline{font-size:12px;letter-spacing:4px;color:var(--cyan)}.intro p{font-size:16px;color:#c0cfdd;line-height:1.7;max-width:355px;margin-bottom:24px}.intro .btn-primary{width:310px;padding:18px}.intro .tag-row{display:flex;gap:8px;flex-wrap:wrap;margin:25px 0 0}.tag-row span{border:1px solid #43566a77;padding:6px 10px;font-size:12px;letter-spacing:.5px;color:#a8c0d3;border-radius:4px}.select-row{display:flex;align-items:center;gap:10px;margin-top:24px;color:#aec0d1;font-size:14px}select{padding:9px;background:#0b1b2c;color:#e4f6ff;border:1px solid #425b70;border-radius:7px;min-width:132px}.intro #introControls{font-size:12px;margin-top:15px;color:#91aabe}.quiz-category{color:var(--cyan);font-size:13px;letter-spacing:1px}.q-text{font-size:21px!important;line-height:1.55!important;font-weight:650!important;color:#f0f9ff!important}.answers{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-top:25px}.answers button{font-size:34px;font-weight:800;padding:20px}.answers small{display:block;font-size:13px;font-weight:500;margin-top:3px;color:#a2b6c9}.answers button:first-child{color:#76ffce}.answers button:last-child{color:#ff84a6}.verdict{background:#08382c77;border:1px solid #43cda566;border-radius:12px;padding:16px;margin-top:20px;line-height:1.65;color:#dbf5e9}.verdict.wrong{background:#4a182777;border-color:#d65c7966}.verdict b{display:block;font-size:16px;margin-bottom:7px}.result-stats{display:grid;grid-template-columns:1fr 1fr 1fr;gap:10px;margin:25px 0}.result-stats b{display:block;font-size:26px;color:var(--cyan)}.result-stats span{font-size:12px;color:#a7bacb}.review{font-size:14px;line-height:1.65;color:#adbece;border-top:1px solid #324557;margin-top:20px;padding-top:10px}.review li{margin:13px 0}.review strong{color:#def1ff}.upgrade-list{display:grid;gap:10px;margin-top:22px}.upgrade-list button{text-align:left;display:flex;gap:14px;align-items:center;padding:17px}.upgrade-list .u-icon{font-size:26px;color:var(--cyan);width:33px;text-align:center}.upgrade-list strong{font-size:16px}.upgrade-list small{display:block;font-size:13px;color:#a7bccd;margin-top:4px}.setting-row{display:flex;align-items:center;justify-content:space-between;gap:15px;margin:20px 0;font-size:15px}.setting-row input{width:20px;height:20px;accent-color:var(--cyan)}.error{position:absolute;inset:0;background:#071324;color:#fff;padding:15%;z-index:100;display:flex;flex-direction:column;justify-content:center}#flash{position:absolute;inset:0;pointer-events:none;background:radial-gradient(ellipse,transparent,#63edff55);opacity:0}body[data-screen="menu"] .hud,body[data-screen="menu"] .risk,body[data-screen="menu"] .bottom{opacity:0}body[data-screen="menu"] .center-note{display:none}
+@media(min-width:1400px){.hud{left:50px}.risk{right:45px}.top{padding-left:50px;padding-right:45px}.bottom{left:50px;right:45px}}
+@media(max-width:900px){.risk{display:none}.hud{left:20px;top:94px;gap:18px}.score{font-size:30px}.meter{width:105px}.bottom{left:20px;right:20px}.control-hint{display:none}.power-controls{margin-left:auto}.intro{margin-left:3vw}.intro h1{font-size:66px}.top{padding-left:20px;padding-right:20px}}
+@media(max-width:600px){.top{padding: max(12px,env(safe-area-inset-top)) 15px 10px;gap:8px}.brand{gap:8px}.brand strong{font-size:12px;letter-spacing:1px}.brand small{font-size:10px;letter-spacing:2.5px}.emblem{font-size:23px}.icon-btn{height:40px;min-width:40px;padding:7px}.top-actions{gap:5px}.hud{left:15px;right:15px;top:79px;display:flex;gap:8px;justify-content:space-between;max-width:none}.hud>div{text-align:left}.hud .eyebrow{font-size:10px;letter-spacing:1px}.score{font-size:25px;margin-top:3px}.best{font-size:10px}.stage-value{font-size:21px}.stage-value small{font-size:12px}.meter{width:95px;margin-top:6px}.life{font-size:16px;letter-spacing:1px}.h-integrity .eyebrow{text-align:right}.h-integrity{text-align:right!important}.quiz-mobile{display:block;font-size:10px;color:#a5bdd0}.bottom{left:15px;right:15px;bottom:max(16px,env(safe-area-inset-bottom))}.power-controls{width:100%;gap:8px}.ability{min-width:0;flex:1;padding:10px 12px}.ability strong{font-size:12px;letter-spacing:.6px}.ability small{font-size:11px}#launch{min-width:0;flex:.8;font-size:13px}#buffs{bottom:91px}#bossHud{top:150px;width:180px}.center-note{top:31%}#combo{font-size:34px}#combo span{font-size:11px}#toast{font-size:12px}.intro-overlay{align-items:flex-end;padding:15px;background:linear-gradient(0deg,#030914 3%,#040b14f5 20%,#040a1422 73%)}.intro{margin:0;padding:8px 8px 18px;max-width:100%;max-height:calc(100dvh - 80px)}.intro h1{font-size:55px;letter-spacing:-3px;margin:14px 0}.intro .overline{font-size:11px}.intro p{font-size:14px;line-height:1.5;max-width:330px;margin:12px 0 10px}.intro .btn-primary{width:100%;padding:15px}.intro .tag-row{margin-top:14px;gap:5px}.tag-row span{font-size:10px;padding:5px 7px}.select-row{margin-top:15px;font-size:12px}.intro #introControls{font-size:11px;margin-top:10px}.panel{padding:23px;border-radius:18px}.panel h2{font-size:26px}.q-text{font-size:19px!important}.overlay{padding:16px}.answers button{padding:16px}.intro-overlay{padding:15px}.result-stats b{font-size:24px}}
+@media(max-height:550px) and (min-width:601px){.top{padding-top:10px}.hud{top:75px;gap:10px}.score{font-size:26px}.intro h1{font-size:47px;margin:10px 0}.intro p{font-size:13px;margin:10px 0}.intro .tag-row{display:none}.intro .select-row{margin-top:10px}.intro .btn-primary{padding:12px}.intro #introControls{margin-bottom:0}.intro{margin-left:4vw}.risk{top:90px}.risk-list{gap:5px}.bottom{bottom:12px}.ability{padding:8px 12px}.panel{padding:20px}.center-note{top:22%}}
+@media(prefers-reduced-motion:reduce){*{transition:none!important}}
+</style></head>
+<body data-screen="menu"><canvas id="scene" aria-label="3D Compliance Breaker arena"></canvas><div class="vignette"></div>
+<div id="app"><header class="top"><div class="brand"><div class="emblem">⬡</div><div><strong>COMPLIANCE BREAKER</strong><small>NEON PROTOCOL</small></div></div><div class="top-actions"><button class="icon-btn" id="soundBtn" title="Sound" aria-label="Toggle sound">♪</button><button class="icon-btn" id="settingsBtn" title="Settings" aria-label="Settings">⚙</button><button class="icon-btn" id="pauseBtn" title="Pause" aria-label="Pause game">Ⅱ</button></div></header>
+<div class="hud"><div><div class="eyebrow" data-i="score">SCORE</div><div class="score" id="score">000000</div><div class="best"><span data-i="best">BEST</span> <span id="best">0</span></div></div><div><div class="eyebrow" data-i="sector">SECTOR</div><div class="stage-value"><span id="stage">01</span> <small id="stageName">/ 03</small></div><div class="meter"><i id="progress"></i></div></div><div class="h-integrity"><div class="eyebrow" data-i="integrity">SHIELDS</div><div class="life" id="lives">⬡ ⬡ ⬡</div><div class="quiz-mobile" id="accuracy"></div></div></div>
+<aside class="risk"><div class="eyebrow" data-i="risk">RISK MATRIX</div><div class="risk-list" id="riskList"></div><div class="quiz-stat"><span class="muted" data-i="correct">CORRECT</span> <b id="quizScore">0 / 0</b></div></aside>
+<div id="bossHud" hidden><div class="boss-label">OMEGA · RISK REACTOR</div><div class="boss-track"><i id="bossBar"></i></div></div>
+<div class="center-note"><div id="combo"></div><div id="toast" role="status" aria-live="polite"></div></div><div id="buffs"></div>
+<div class="bottom"><div class="control-hint" id="controls"></div><div class="power-controls"><button class="ability" id="pulseBtn"><strong data-i="pulse">PULSE BURST</strong><small id="pulseText">0% · SPACE</small><em id="pulseMeter"></em></button><button id="launch" data-i="launch">LAUNCH ↗</button></div></div>
+<div id="menu" class="overlay intro-overlay"><div class="panel intro"><div class="overline">3D ARCADE / COMPLIANCE BREAKER</div><h1>NEON<br><span>PROTOCOL.</span></h1><p id="intro"></p><button class="btn-primary" id="startBtn" data-i="start"></button><div id="introControls"></div><div class="select-row"><label for="language">LANGUAGE</label><select id="language"><option value="ko">한국어</option><option value="en">English</option><option value="zh">中文</option><option value="ja">日本語</option><option value="vi">Tiếng Việt</option></select></div><div class="tag-row"><span>3D ARENA</span><span>COMBO CHAINS</span><span>REACTOR BOSS</span></div></div></div>
+<div class="overlay" id="quiz" hidden><section class="panel" role="dialog" aria-modal="true" aria-labelledby="question"><div class="quiz-category" id="qCategory"></div><h2 data-i="checkpoint"></h2><p id="question" class="q-text"></p><div class="answers" id="answers"><button data-answer="1">O<small data-i="true"></small></button><button data-answer="0">X<small data-i="false"></small></button></div><div class="verdict" id="verdict" hidden></div><button class="btn-primary" id="quizContinue" data-i="continue" hidden></button></section></div>
+<div class="overlay" id="upgrade" hidden><section class="panel" role="dialog" aria-modal="true" aria-labelledby="upgradeTitle"><div class="eyebrow" data-i="cleared"></div><h2 id="upgradeTitle" data-i="chooseUpgrade"></h2><p id="upgradeInfo"></p><div class="upgrade-list" id="upgradeList"></div></section></div>
+<div class="overlay" id="pause" hidden><section class="panel" role="dialog" aria-modal="true" aria-labelledby="pauseTitle"><div class="eyebrow">NEON PROTOCOL</div><h2 id="pauseTitle" data-i="paused"></h2><p data-i="pauseHelp"></p><button class="btn-primary" id="resumeBtn" data-i="resume"></button><button class="btn-secondary" id="restartBtn" data-i="restart"></button><button class="btn-secondary" id="menuBtn" data-i="menu"></button></section></div>
+<div class="overlay" id="settings" hidden><section class="panel" role="dialog" aria-modal="true" aria-labelledby="settingsTitle"><h2 id="settingsTitle" data-i="settings"></h2><div class="setting-row"><label for="quality" data-i="quality"></label><select id="quality"><option value="high">Ultra</option><option value="balanced">Balanced</option><option value="low">Performance</option></select></div><div class="setting-row"><label for="motion" data-i="motion"></label><input type="checkbox" id="motion" checked></div><div class="setting-row"><label for="audioSetting" data-i="sound"></label><input type="checkbox" id="audioSetting" checked></div><button class="btn-primary" id="closeSettings" data-i="continue"></button></section></div>
+<div class="overlay" id="end" hidden><section class="panel" role="dialog" aria-modal="true" aria-labelledby="endTitle"><div class="eyebrow" id="endEyebrow">RUN COMPLETE</div><h2 id="endTitle"></h2><p id="endCopy"></p><div class="result-stats"><div><b id="finalScore"></b><span data-i="score"></span></div><div><b id="finalCombo"></b><span data-i="maxCombo"></span></div><div><b id="finalAcc"></b><span data-i="accuracy"></span></div></div><button class="btn-primary" id="endlessBtn" data-i="endless" hidden></button><button class="btn-primary" id="retryBtn" data-i="retry"></button><button class="btn-secondary" id="endMenu" data-i="menu"></button><div class="review" id="review"></div></section></div>
+<div id="flash"></div></div><div class="error" id="error" hidden><h2>WebGL is unavailable</h2><p>This 3D game needs a browser with hardware acceleration. Open it in a current Chrome, Edge, Firefox or Safari browser.</p></div>
+<script>
+const LANGS=[
+  {id:"ko",label:"한국어",place:"경복궁 · 서울",pos:"50% 72%"},
+  {id:"en",label:"English",place:"Statue of Liberty · New York",pos:"50% 45%"},
+  {id:"zh",label:"中文",place:"故宫 · 北京",pos:"50% 62%"},
+  {id:"ja",label:"日本語",place:"姫路城 · 兵庫",pos:"50% 58%"},
+  {id:"vi",label:"Tiếng Việt",place:"Hoàng thành Huế",pos:"50% 62%"}
+];
+
+/* ============ quiz metadata: d = domain index, a = 1 means O ============ */
+const META=[
+ [0,1],[0,0],[0,1],[1,1],[1,1],[1,0],[2,0],[2,1],[2,1],
+ [3,1],[3,0],[3,1],[4,0],[4,1],[4,1],[5,1],[5,1],[5,0],
+ [6,1],[6,0],[6,1],[7,1],[7,0],[7,1],[8,1],[8,0],[8,1]
+];
+const COLORS=["#D64545","#E07B39","#D9A21B","#6E9E3A","#2E9E8A","#3A7BD5","#7B5BD6","#C2559C","#8A7A5A"];
+
+/* ============ translations ============ */
+const T={};
+
+T.ko={
+ ui:{t1:"컴플라이언스",t2:"브레이커",
+  intro:"벽돌 하나가 리스크 하나입니다. 방패로 공을 받아 리스크 벽을 허무세요. <strong>?</strong> 벽돌을 깨면 O/X 퀴즈가 나옵니다. 맞히면 방패가 강해지고, 틀리면 방패가 줄어듭니다.",
+  ctrl:"조작: 화면을 끌어 방패 이동 · 탭 또는 스페이스로 발사 · 키보드 ← →",
+  start:"시작",resume:"계속",next:"다음 단계",retry:"다시 하기",back:"언어 변경",
+  chosen:"{l}를 선택했습니다.",anyKey:"아무 키나 누르거나 화면을 탭하세요.",
+  hScore:"점수",hLevel:"단계",hQuiz:"정답",hint:"탭 또는 스페이스로 발사",
+  lvTitle:"{n}단계 통과",
+  lvText:"+500점. 다음 단계는 리스크 영역이 {r}개로 늘고 공이 빨라집니다. 두 번 맞혀야 깨지는 벽돌도 있습니다.",
+  endWin:"리스크 벽 완파",endLose:"결과 보고서",
+  winText:"세 단계의 리스크를 모두 제거했습니다. 아래 복습 항목을 확인하고 마무리하세요.",
+  loseText:"방패가 모두 소진되었습니다. 틀린 문항을 복습하고 다시 도전하세요.",
+  sScore:"점수",sLevel:"도달 단계",sAcc:"퀴즈 정답률",
+  reviewHead:"복습이 필요한 항목 {n}개",
+  reviewNone:"틀린 문항이 없습니다. 모든 퀴즈를 정확히 판단했습니다.",
+  reviewNoQuiz:"퀴즈 벽돌을 만나지 못했습니다. ? 벽돌을 노려보세요.",
+  ansIs:"정답 {a}",
+  correct:"정답 · +300 · {b}",wrong:"오답 · 정답은 {a} · 방패 축소 10초",
+  bShield:"방패 +1",bWide:"방패 확장 15초",
+  tClear:"{d} 리스크 제거 +100",tWeak:"{d} 리스크 약화 +50",tCheck:"리스크 점검 · {d}",tLife:"리스크 실현 · 방패 -1"},
+ dom:["제재","수출통제","AML/CFT","반부패","공정거래","개인정보","AI 규제","제3자 리스크","KYC/KYB"],
+ q:[
+ ["OFAC 제재 대상자가 50% 이상 지분을 보유한 법인은 명단에 없어도 제재 대상으로 간주된다.","OFAC 50% 룰입니다. 제재 대상자가 직·간접으로 50% 이상 소유한 법인은 자동으로 차단됩니다."],
+ ["거래 상대방 이름이 제재 명단에 없으면 제재 스크리닝은 완료된 것이다.","명단 검색은 시작일 뿐입니다. 소유·지배구조, 최종 사용자, 경유지, 선박까지 확인해야 합니다."],
+ ["제재 대상국을 경유하는 화물 운송이나 환적도 제재 위반이 될 수 있다.","경유·환적·보험·결제 등 거래 전 과정이 제재 적용 범위에 들어갑니다."],
+ ["한국에서 선적하는 제품이라도 미국산 부품·기술 비중이 일정 기준을 넘으면 미국 EAR이 적용될 수 있다.","EAR의 최소기준(de minimis) 규정입니다. 미국 외 생산품도 미국산 콘텐츠 비율에 따라 적용됩니다."],
+ ["민수용으로 판매하는 품목도 군사 전용 가능성이 있으면 수출허가 대상이 될 수 있다.","이중용도(dual-use) 품목은 전략물자 판정과 최종 사용자·용도 확인이 필요합니다."],
+ ["이미 해외에 나간 물품을 제3국으로 다시 보내는 재수출은 수출통제 대상이 아니다.","재수출(re-export)과 국내 이전(in-country transfer)도 통제 대상입니다."],
+ ["오래 거래한 파트너라면 의심거래보고(STR) 의무는 면제된다.","거래 기간과 무관하게 자금세탁 의심 징후가 있으면 보고 의무가 발생합니다."],
+ ["보고 기준을 피하려고 거래를 여러 건으로 쪼개는 행위(structuring)는 그 자체로 위법이다.","분할거래는 대표적인 자금세탁 수법이며, 요청받은 직원도 책임을 질 수 있습니다."],
+ ["제3국 계좌로의 송금 요청, 거래 구조의 불필요한 복잡성은 자금세탁 적신호(red flag)다.","계약 당사자와 다른 계좌, 조세회피처 경유, 이유 없는 복잡성은 즉시 확인 대상입니다."],
+ ["영국 뇌물방지법(UK Bribery Act)은 소액 급행료(facilitation payment)도 예외 없이 금지한다.","UK Bribery Act에는 급행료 예외가 없습니다. 회사 정책도 급행료를 금지하는 것이 일반적입니다."],
+ ["선물·접대는 금액이 작으면 회사 정책과 상관없이 항상 허용된다.","금액이 작아도 시기·상대·목적에 따라 뇌물로 평가될 수 있습니다. 회사 한도와 사전 승인 절차를 따르세요."],
+ ["공무원의 자녀 인턴 채용 요청을 들어주는 것도 뇌물에 해당할 수 있다.","금전이 아니어도 가치 있는 것(anything of value)이면 뇌물이 될 수 있습니다."],
+ ["경쟁사와 가격 정보를 참고용으로만 교환하는 것은 담합이 아니다.","가격·생산량·거래조건 정보 교환은 합의 여부와 무관하게 담합으로 추정될 수 있습니다."],
+ ["업계 모임에서 경쟁사가 가격 인상을 이야기하면 즉시 이의를 제기하고 자리를 떠나 기록을 남겨야 한다.","침묵은 묵시적 동의로 해석될 수 있습니다. 이의 제기, 퇴장, 기록, 컴플라이언스 보고가 원칙입니다."],
+ ["거래처에 재판매 가격을 강제하는 것은 공정거래법 위반이 될 수 있다.","재판매가격유지행위는 원칙적으로 금지됩니다. 권장가 제시와 강제는 구분해야 합니다."],
+ ["수집 목적 외로 개인정보를 이용하려면 별도의 동의가 필요하다.","목적 제한 원칙입니다. 새로운 목적으로 쓰려면 별도 동의 또는 법적 근거가 있어야 합니다."],
+ ["EU GDPR 위반 시 과징금은 전 세계 연매출의 최대 4%까지 부과될 수 있다.","GDPR 최고 과징금은 2천만 유로 또는 전 세계 연매출 4% 중 큰 금액입니다."],
+ ["업무용 고객 개인정보를 개인 메신저로 전송하는 것은 편의상 허용된다.","승인되지 않은 채널로의 전송은 유출 사고로 처리됩니다. 회사가 승인한 시스템만 사용하세요."],
+ ["EU AI Act는 AI 시스템을 위험 수준에 따라 차등 규제한다.","금지·고위험·제한적·최소 위험으로 나누어 의무를 달리 부과하는 위험 기반 접근입니다."],
+ ["생성형 AI 서비스에 회사 기밀 문서를 입력하는 것은 정보 유출이 아니다.","외부 AI 서비스 입력은 제3자 제공에 해당할 수 있습니다. 승인된 사내 환경만 사용하세요."],
+ ["AI가 작성한 초안이라도 그 내용에 대한 최종 책임은 사람이 진다.","AI는 도구입니다. 검토·승인·제출한 사람과 회사가 책임을 집니다."],
+ ["대리점·중개인이 저지른 뇌물도 회사가 책임질 수 있다.","제3자를 통한 간접 뇌물도 처벌 대상입니다. 알았거나 알 수 있었다면 회사 책임이 성립합니다."],
+ ["제3자 실사(due diligence)는 계약 체결 후에 해도 충분하다.","실사는 계약 전에 완료해야 합니다. 계약 후 발견된 리스크는 이미 회사 리스크입니다."],
+ ["수수료가 업계 관행보다 지나치게 높은 중개인은 뇌물 리스크의 적신호다.","과도한 수수료, 자격 불명, 공무원과의 관계는 제3자 적신호(red flag)입니다."],
+ ["실제 소유자(UBO) 확인은 법인 거래처에도 필요하다.","법인 뒤에 있는 실제 소유자를 확인해야 제재·자금세탁 리스크를 걸러낼 수 있습니다."],
+ ["거래처 KYC는 최초 계약 시 한 번만 하면 된다.","지분 변동, 제재 지정, 소송 등 변화가 있으므로 주기적·사건 기반 재확인이 필요합니다."],
+ ["거래처가 기본 서류 제출을 거부하거나 지연하는 것 자체가 확인해야 할 신호다.","정상 기업은 기본 KYC 서류 제출에 문제가 없습니다. 거부·지연은 리스크 신호입니다."]]};
+
+T.en={
+ ui:{t1:"Compliance",t2:"Breaker",
+  intro:"Every brick is a risk. Move the shield, keep the ball alive and bring the risk wall down. Breaking a <strong>?</strong> brick opens a true/false question — answer it right and your shield grows, get it wrong and it shrinks.",
+  ctrl:"Controls: drag to move the shield · tap or space to launch · arrow keys",
+  start:"Start",resume:"Continue",next:"Next stage",retry:"Play again",back:"Change language",
+  chosen:"You have chosen {l}.",anyKey:"Press any key or tap the screen to continue.",
+  hScore:"Score",hLevel:"Stage",hQuiz:"Correct",hint:"Tap or press space to launch",
+  lvTitle:"Stage {n} cleared",
+  lvText:"+500 points. The next stage covers {r} risk areas, the ball speeds up, and some bricks take two hits.",
+  endWin:"Risk wall cleared",endLose:"Debrief",
+  winText:"You cleared all three stages. Read through the review items below before you finish.",
+  loseText:"Your shields are gone. Review the questions you missed and try again.",
+  sScore:"Score",sLevel:"Stage reached",sAcc:"Quiz accuracy",
+  reviewHead:"{n} items to review",
+  reviewNone:"No wrong answers. Every question judged correctly.",
+  reviewNoQuiz:"You never hit a quiz brick. Aim for the ? bricks next time.",
+  ansIs:"answer {a}",
+  correct:"Correct · +300 · {b}",wrong:"Wrong · the answer is {a} · shield shrinks for 10s",
+  bShield:"shield +1",bWide:"wider shield for 15s",
+  tClear:"{d} risk cleared +100",tWeak:"{d} risk weakened +50",tCheck:"Risk check · {d}",tLife:"Risk realised · shield -1"},
+ dom:["Sanctions","Export controls","AML/CFT","Anti-corruption","Antitrust","Data privacy","AI regulation","Third-party risk","KYC/KYB"],
+ q:[
+ ["An entity owned 50% or more by a sanctioned party is itself treated as sanctioned, even if it is not named on any list.","This is the OFAC 50 Percent Rule. Entities owned 50% or more, directly or indirectly, by blocked persons are blocked automatically."],
+ ["If the counterparty name does not appear on a sanctions list, screening is complete.","List screening is only the start. Ownership and control, the end user, transit points and vessels all have to be checked."],
+ ["Shipping or transshipping cargo through a sanctioned country can itself be a violation.","Sanctions reach the whole transaction chain: transit, transshipment, insurance and payment."],
+ ["Goods shipped from Korea can still fall under the US EAR if US-origin content exceeds a set threshold.","This is the EAR de minimis rule. Products made outside the US are captured based on their US-origin content."],
+ ["An item sold for civilian use may still need an export licence if it could be diverted to military use.","Dual-use items require strategic-item classification and confirmation of the end user and end use."],
+ ["Sending goods that are already abroad on to a third country falls outside export control.","Re-exports and in-country transfers are controlled as well."],
+ ["A partner you have traded with for years is exempt from suspicious transaction reporting.","The length of the relationship is irrelevant. Any sign of money laundering triggers the reporting duty."],
+ ["Splitting a transaction into several smaller ones to stay under a reporting threshold is illegal in itself.","Structuring is a classic laundering technique, and staff who carry out the request can be held liable."],
+ ["A payment request to an account in an unrelated third country, or needless complexity in a deal structure, is a laundering red flag.","An account that differs from the contracting party, routing through a tax haven and unexplained complexity all need checking at once."],
+ ["The UK Bribery Act bans facilitation payments outright, however small they are.","There is no facilitation-payment exemption in the Act, and company policy usually bans them too."],
+ ["Gifts and hospitality are always acceptable as long as the value is small, whatever company policy says.","Even a small gift can count as a bribe depending on timing, recipient and purpose. Follow your limits and pre-approval process."],
+ ["Giving an internship to an official's child at their request can amount to bribery.","It does not have to be money. Anything of value can be a bribe."],
+ ["Exchanging price information with a competitor for reference only is not collusion.","Exchanging price, output or trading terms can be presumed to be cartel conduct whether or not an agreement was reached."],
+ ["If a competitor raises pricing at an industry gathering, object at once, leave, and record what happened.","Silence can be read as tacit agreement. Object, leave, document and report to compliance."],
+ ["Forcing a distributor to sell at a fixed resale price can breach competition law.","Resale price maintenance is prohibited in principle. A recommended price and an imposed price are different things."],
+ ["Using personal data for a purpose other than the one it was collected for requires separate consent.","This is purpose limitation. A new purpose needs fresh consent or another lawful basis."],
+ ["A GDPR fine can reach 4% of worldwide annual turnover.","The upper tier is EUR 20 million or 4% of global annual turnover, whichever is higher."],
+ ["Sending customer personal data over a personal messenger app is acceptable for convenience.","Unapproved channels are treated as a breach. Use only company-approved systems."],
+ ["The EU AI Act regulates AI systems according to their level of risk.","A risk-based approach: prohibited, high-risk, limited and minimal risk each carry different obligations."],
+ ["Pasting confidential company documents into a generative AI service is not a data leak.","Input to an external AI service can amount to disclosure to a third party. Use only approved internal environments."],
+ ["Even when a draft is written by AI, a person remains accountable for its content.","AI is a tool. The people who reviewed, approved and submitted the work, and the company, carry the responsibility."],
+ ["A company can be held liable for bribes paid by its agents or intermediaries.","Indirect bribery through third parties is punishable where the company knew or should have known."],
+ ["Third-party due diligence can wait until after the contract is signed.","Diligence belongs before signature. Risk found afterwards is already the company's risk."],
+ ["An intermediary whose commission is far above market practice is a bribery red flag.","Excessive commission, unclear qualifications and links to officials are classic third-party red flags."],
+ ["Ultimate beneficial owner checks are needed for corporate counterparties too.","Only by identifying who really owns the company can you filter out sanctions and laundering risk."],
+ ["KYC on a counterparty only has to be done once, when the first contract is signed.","Ownership changes, sanctions designations and litigation all occur, so periodic and event-driven refresh is required."],
+ ["A counterparty refusing or stalling on basic documents is itself something to look into.","A legitimate business has no trouble producing basic KYC documents. Refusal or delay is a risk signal."]]};
+
+T.zh={
+ ui:{t1:"合规",t2:"破墙者",
+  intro:"每一块砖就是一项风险。移动盾牌接住球，把风险之墙打穿。击碎 <strong>?</strong> 砖会出现判断题，答对盾牌变强，答错盾牌缩小。",
+  ctrl:"操作：拖动屏幕移动盾牌 · 点击或空格发射 · 键盘 ← →",
+  start:"开始",resume:"继续",next:"下一关",retry:"再玩一次",back:"更换语言",
+  chosen:"您已选择{l}。",anyKey:"请按任意键或点击屏幕继续。",
+  hScore:"得分",hLevel:"关卡",hQuiz:"答对",hint:"点击或按空格发射",
+  lvTitle:"第{n}关通过",
+  lvText:"+500分。下一关风险领域增至{r}个，球速加快，还会出现需要击中两次的砖块。",
+  endWin:"风险之墙全部击穿",endLose:"结果报告",
+  winText:"三关的风险已全部清除。请查看下方复习条目后结束。",
+  loseText:"盾牌已全部耗尽。复习答错的题目后再来挑战。",
+  sScore:"得分",sLevel:"到达关卡",sAcc:"答题正确率",
+  reviewHead:"需要复习的条目 {n} 项",
+  reviewNone:"没有答错的题目，全部判断正确。",
+  reviewNoQuiz:"没有遇到判断题砖块。下次瞄准 ? 砖块。",
+  ansIs:"正确答案 {a}",
+  correct:"答对 · +300 · {b}",wrong:"答错 · 正确答案是 {a} · 盾牌缩小10秒",
+  bShield:"盾牌 +1",bWide:"盾牌加长15秒",
+  tClear:"{d} 风险已清除 +100",tWeak:"{d} 风险已削弱 +50",tCheck:"风险排查 · {d}",tLife:"风险发生 · 盾牌 -1"},
+ dom:["制裁","出口管制","反洗钱","反腐败","反垄断","个人信息","人工智能监管","第三方风险","KYC/KYB"],
+ q:[
+ ["被制裁对象持股50%以上的法人，即使未被列入名单，也视为制裁对象。","这就是OFAC的50%规则。被制裁对象直接或间接持股50%以上的法人自动被冻结。"],
+ ["交易对方名称不在制裁名单上，制裁筛查就算完成了。","名单筛查只是开始，还须核查股权与控制关系、最终用户、中转地及船舶。"],
+ ["经由被制裁国家中转或转运货物也可能构成制裁违规。","中转、转运、保险、结算等交易全过程都在制裁适用范围内。"],
+ ["即使从韩国发货，只要美国原产部件或技术占比超过一定标准，也可能适用美国EAR。","这是EAR的最低限度（de minimis）规则。美国境外生产的产品也按美国原产成分比例适用。"],
+ ["以民用名义销售的产品，如存在转为军用的可能，也可能需要出口许可。","两用物项需要进行战略物项判定，并确认最终用户与最终用途。"],
+ ["已经出口到境外的物项再转往第三国，不属于出口管制范围。","再出口（re-export）和境内转让（in-country transfer）同样受管制。"],
+ ["只要是长期合作的伙伴，就可以免除可疑交易报告义务。","与合作年限无关，只要存在洗钱可疑迹象就产生报告义务。"],
+ ["为规避报告标准而将一笔交易拆分为多笔，本身即属违法。","拆分交易是典型的洗钱手法，受托执行的员工也可能承担责任。"],
+ ["要求汇往第三国账户、交易结构不必要地复杂，都是洗钱危险信号。","与合同方不一致的账户、经由避税地、无理由的复杂结构，都应立即核查。"],
+ ["英国反贿赂法对小额加急费也一律禁止，没有例外。","英国反贿赂法没有加急费例外，公司政策通常也一并禁止。"],
+ ["礼品和招待只要金额小，就与公司政策无关，总是被允许的。","金额虽小，但视时机、对象和目的仍可能被认定为贿赂。请遵守公司限额和事前审批程序。"],
+ ["应公务员要求为其子女提供实习机会，也可能构成贿赂。","即使不是金钱，只要是有价值之物就可能构成贿赂。"],
+ ["与竞争对手仅作参考用交换价格信息，不算串通。","交换价格、产量、交易条件的信息，无论是否达成合意都可能被推定为串通。"],
+ ["在行业聚会上竞争对手谈及涨价时，应立即提出异议、离场并留下记录。","沉默可能被解读为默示同意。异议、离场、记录、向合规部门报告是原则。"],
+ ["强制经销商执行转售价格，可能违反公平交易法。","转售价格维持行为原则上被禁止。建议价与强制价必须区分。"],
+ ["将个人信息用于收集目的以外的用途，需要另行取得同意。","这是目的限制原则。用于新目的须另行同意或具备其他法律依据。"],
+ ["违反欧盟GDPR的罚款最高可达全球年营业额的4%。","GDPR最高罚款为2000万欧元或全球年营业额4%中的较高者。"],
+ ["为图方便，用私人通讯软件发送业务客户个人信息是可以的。","通过未经批准的渠道传送会被作为泄露事故处理。只能使用公司批准的系统。"],
+ ["欧盟人工智能法案按风险等级对AI系统实行差异化监管。","分为禁止、高风险、有限风险和最小风险，义务各不相同，属于基于风险的监管方式。"],
+ ["把公司机密文件输入生成式AI服务，不算信息泄露。","输入外部AI服务可能构成向第三方提供。请只使用经批准的内部环境。"],
+ ["即使是AI生成的草稿，其内容的最终责任仍由人承担。","AI只是工具。审阅、批准并提交的人以及公司承担责任。"],
+ ["代理商或中介行贿，公司也可能被追责。","通过第三方的间接行贿同样受处罚。公司知情或应当知情即成立责任。"],
+ ["第三方尽职调查在签订合同之后再做也足够。","尽职调查必须在签约前完成。签约后发现的风险已经是公司的风险。"],
+ ["佣金远高于行业惯例的中介，是贿赂风险的危险信号。","过高佣金、资质不明、与公务员的关系都是第三方危险信号。"],
+ ["对法人交易对方也需要确认实际受益人（UBO）。","只有查明法人背后的实际所有人，才能过滤制裁和洗钱风险。"],
+ ["交易对方的KYC只需在首次签约时做一次。","股权变动、被列入制裁名单、诉讼等情况会发生变化，需定期及基于事件重新核查。"],
+ ["交易对方拒绝或拖延提交基本文件，本身就是需要核查的信号。","正常企业提交基本KYC文件没有困难。拒绝或拖延是风险信号。"]]};
+
+T.ja={
+ ui:{t1:"コンプライアンス",t2:"ブレイカー",
+  intro:"ブロック一つがリスク一つです。シールドでボールを受け、リスクの壁を崩してください。<strong>?</strong> ブロックを壊すと〇×クイズが出ます。正解ならシールドが強化され、不正解なら縮みます。",
+  ctrl:"操作：画面をドラッグしてシールド移動 · タップまたはスペースで発射 · キーボード ← →",
+  start:"スタート",resume:"続ける",next:"次のステージ",retry:"もう一度",back:"言語を変更",
+  chosen:"{l}を選択しました。",anyKey:"任意のキーを押すか、画面をタップしてください。",
+  hScore:"スコア",hLevel:"ステージ",hQuiz:"正解",hint:"タップまたはスペースで発射",
+  lvTitle:"ステージ{n}クリア",
+  lvText:"+500点。次のステージはリスク領域が{r}個に増え、ボールが速くなります。2回当てないと壊れないブロックも登場します。",
+  endWin:"リスクの壁を完全撃破",endLose:"結果レポート",
+  winText:"3つのステージのリスクをすべて取り除きました。下の復習項目を確認して終了してください。",
+  loseText:"シールドをすべて失いました。間違えた問題を復習して再挑戦してください。",
+  sScore:"スコア",sLevel:"到達ステージ",sAcc:"クイズ正答率",
+  reviewHead:"復習が必要な項目 {n}件",
+  reviewNone:"間違いはありません。すべて正しく判断できました。",
+  reviewNoQuiz:"クイズブロックに当たりませんでした。次は ? ブロックを狙ってください。",
+  ansIs:"正解 {a}",
+  correct:"正解 · +300 · {b}",wrong:"不正解 · 正解は {a} · シールド縮小10秒",
+  bShield:"シールド +1",bWide:"シールド拡大15秒",
+  tClear:"{d} リスク除去 +100",tWeak:"{d} リスク低減 +50",tCheck:"リスク点検 · {d}",tLife:"リスク顕在化 · シールド -1"},
+ dom:["制裁","輸出管理","マネロン対策","腐敗防止","競争法","個人情報","AI規制","第三者リスク","KYC/KYB"],
+ q:[
+ ["制裁対象者が50％以上の持分を保有する法人は、名簿に記載がなくても制裁対象とみなされる。","OFACの50％ルールです。制裁対象者が直接・間接に50％以上を保有する法人は自動的に凍結対象となります。"],
+ ["取引先の名称が制裁リストになければ、制裁スクリーニングは完了である。","リスト照合は出発点にすぎません。所有・支配構造、最終需要者、経由地、船舶まで確認が必要です。"],
+ ["制裁対象国を経由する貨物の輸送や積替えも制裁違反となり得る。","経由・積替え・保険・決済など取引の全過程が制裁の適用範囲に入ります。"],
+ ["韓国から出荷する製品でも、米国原産の部品・技術の比率が一定基準を超えれば米国EARが適用され得る。","EARのデミニミス（最小基準）規定です。米国外で生産された製品も米国原産比率に応じて適用されます。"],
+ ["民生用として販売する品目でも、軍事転用の可能性があれば輸出許可の対象になり得る。","デュアルユース品目は該非判定と最終需要者・用途の確認が必要です。"],
+ ["すでに海外にある物品を第三国へ再び送る再輸出は、輸出管理の対象外である。","再輸出（re-export）および域内移転（in-country transfer）も規制対象です。"],
+ ["長年取引しているパートナーであれば、疑わしい取引の届出義務は免除される。","取引年数に関係なく、マネーロンダリングの疑いがあれば届出義務が生じます。"],
+ ["報告基準を回避するために取引を複数に分割する行為は、それ自体が違法である。","分割取引は代表的な資金洗浄の手口であり、依頼を受けた社員も責任を問われ得ます。"],
+ ["第三国口座への送金要請や、取引構造の不必要な複雑さはマネーロンダリングのレッドフラッグである。","契約当事者と異なる口座、タックスヘイブン経由、理由のない複雑さは直ちに確認すべき対象です。"],
+ ["英国贈収賄防止法は少額のファシリテーション・ペイメントも例外なく禁止している。","同法にファシリテーション・ペイメントの例外はありません。社内規程でも通常は禁止されています。"],
+ ["贈答・接待は金額が小さければ、社内規程と関係なく常に許容される。","少額でも時期・相手・目的によっては賄賂と評価され得ます。社内限度額と事前承認手続に従ってください。"],
+ ["公務員から求められて、その子女をインターンとして採用することも賄賂に当たり得る。","金銭でなくても価値のあるものであれば賄賂になり得ます。"],
+ ["競合他社と価格情報を参考として交換するだけなら、カルテルには当たらない。","価格・生産量・取引条件の情報交換は、合意の有無にかかわらずカルテルと推定され得ます。"],
+ ["業界の会合で競合他社が値上げに言及したら、直ちに異議を述べて退席し、記録を残すべきである。","沈黙は黙示の同意と解釈され得ます。異議、退席、記録、コンプライアンスへの報告が原則です。"],
+ ["取引先に再販売価格を強制することは競争法違反となり得る。","再販売価格維持行為は原則禁止です。参考価格の提示と強制は区別しなければなりません。"],
+ ["収集目的以外に個人情報を利用するには、別途の同意が必要である。","目的制限の原則です。新たな目的で利用するには別途の同意または他の法的根拠が必要です。"],
+ ["EUのGDPR違反の制裁金は、全世界年間売上高の最大4％まで科され得る。","上限は2,000万ユーロまたは全世界年間売上高の4％のいずれか高い方です。"],
+ ["業務上の顧客の個人情報を私用メッセンジャーで送ることは、便宜上許容される。","承認されていない経路での送信は漏えい事故として扱われます。会社が承認したシステムのみを使用してください。"],
+ ["EU AI法はAIシステムをリスクの水準に応じて区分して規制する。","禁止・高リスク・限定的・最小リスクに分けて義務を変えるリスクベース・アプローチです。"],
+ ["生成AIサービスに社内の機密文書を入力することは情報漏えいではない。","外部AIサービスへの入力は第三者提供に当たり得ます。承認された社内環境のみを使用してください。"],
+ ["AIが作成した草案であっても、その内容に対する最終的な責任は人が負う。","AIは道具です。確認・承認・提出した人と会社が責任を負います。"],
+ ["代理店や仲介者が行った贈賄について、会社が責任を負うことがある。","第三者を通じた間接的な贈賄も処罰対象です。知っていた、または知り得た場合に会社の責任が成立します。"],
+ ["第三者デューデリジェンスは契約締結後に行えば十分である。","デューデリジェンスは契約前に完了させます。契約後に判明したリスクは、すでに会社のリスクです。"],
+ ["手数料が業界慣行より著しく高い仲介者は、贈賄リスクのレッドフラッグである。","過大な手数料、資格の不明確さ、公務員との関係は第三者のレッドフラッグです。"],
+ ["実質的支配者（UBO）の確認は法人の取引先にも必要である。","法人の背後にいる実質的な所有者を確認して初めて、制裁・資金洗浄リスクを排除できます。"],
+ ["取引先のKYCは初回契約時に一度行えばよい。","持分の変動、制裁指定、訴訟などの変化があるため、定期的かつ事象に応じた再確認が必要です。"],
+ ["取引先が基本的な書類の提出を拒否したり遅らせたりすること自体が、確認すべきシグナルである。","正常な企業は基本的なKYC書類の提出に問題はありません。拒否・遅延はリスクシグナルです。"]]};
+
+T.vi={
+ ui:{t1:"Tuân thủ",t2:"Phá tường",
+  intro:"Mỗi viên gạch là một rủi ro. Di chuyển tấm khiên, giữ bóng trong sân và phá đổ bức tường rủi ro. Phá viên gạch <strong>?</strong> sẽ mở một câu hỏi đúng/sai — trả lời đúng thì khiên mạnh lên, sai thì khiên thu nhỏ.",
+  ctrl:"Điều khiển: kéo màn hình để di chuyển khiên · chạm hoặc phím cách để phóng bóng · phím ← →",
+  start:"Bắt đầu",resume:"Tiếp tục",next:"Màn tiếp theo",retry:"Chơi lại",back:"Đổi ngôn ngữ",
+  chosen:"Bạn đã chọn {l}.",anyKey:"Nhấn phím bất kỳ hoặc chạm màn hình để tiếp tục.",
+  hScore:"Điểm",hLevel:"Màn",hQuiz:"Đúng",hint:"Chạm hoặc nhấn phím cách để phóng",
+  lvTitle:"Hoàn thành màn {n}",
+  lvText:"+500 điểm. Màn sau tăng lên {r} lĩnh vực rủi ro, bóng nhanh hơn và có những viên gạch phải đánh trúng hai lần.",
+  endWin:"Đã phá hết tường rủi ro",endLose:"Báo cáo kết quả",
+  winText:"Bạn đã xử lý rủi ro của cả ba màn. Hãy xem lại các mục bên dưới trước khi kết thúc.",
+  loseText:"Bạn đã hết khiên. Hãy ôn lại các câu trả lời sai và thử lại.",
+  sScore:"Điểm",sLevel:"Màn đạt được",sAcc:"Tỷ lệ đúng",
+  reviewHead:"{n} mục cần ôn lại",
+  reviewNone:"Không có câu nào sai. Bạn đã phán đoán chính xác toàn bộ.",
+  reviewNoQuiz:"Bạn chưa chạm viên gạch câu hỏi nào. Lần sau hãy nhắm vào viên gạch ?.",
+  ansIs:"đáp án {a}",
+  correct:"Đúng · +300 · {b}",wrong:"Sai · đáp án là {a} · khiên thu nhỏ 10 giây",
+  bShield:"khiên +1",bWide:"khiên rộng hơn 15 giây",
+  tClear:"Đã xử lý rủi ro {d} +100",tWeak:"Rủi ro {d} suy yếu +50",tCheck:"Rà soát rủi ro · {d}",tLife:"Rủi ro xảy ra · khiên -1"},
+ dom:["Trừng phạt","Kiểm soát xuất khẩu","Phòng chống rửa tiền","Chống tham nhũng","Cạnh tranh","Dữ liệu cá nhân","Quy định AI","Rủi ro bên thứ ba","KYC/KYB"],
+ q:[
+ ["Pháp nhân do đối tượng bị trừng phạt sở hữu từ 50% trở lên vẫn bị coi là đối tượng bị trừng phạt, kể cả khi không có tên trong danh sách.","Đây là quy tắc 50% của OFAC. Pháp nhân do đối tượng bị phong tỏa sở hữu trực tiếp hoặc gián tiếp từ 50% trở lên sẽ tự động bị phong tỏa."],
+ ["Nếu tên đối tác không có trong danh sách trừng phạt thì việc sàng lọc trừng phạt đã hoàn tất.","Rà soát danh sách chỉ là bước đầu. Còn phải kiểm tra cơ cấu sở hữu và kiểm soát, người sử dụng cuối, điểm trung chuyển và tàu vận chuyển."],
+ ["Vận chuyển hoặc trung chuyển hàng hóa qua quốc gia bị trừng phạt cũng có thể là hành vi vi phạm.","Toàn bộ chuỗi giao dịch — trung chuyển, chuyển tải, bảo hiểm, thanh toán — đều thuộc phạm vi áp dụng."],
+ ["Hàng xuất đi từ Hàn Quốc vẫn có thể chịu EAR của Hoa Kỳ nếu tỷ lệ linh kiện, công nghệ xuất xứ Hoa Kỳ vượt ngưỡng quy định.","Đây là quy định de minimis của EAR. Sản phẩm sản xuất ngoài Hoa Kỳ vẫn bị điều chỉnh theo tỷ lệ hàm lượng Hoa Kỳ."],
+ ["Mặt hàng bán cho mục đích dân sự vẫn có thể phải xin giấy phép xuất khẩu nếu có khả năng chuyển sang mục đích quân sự.","Hàng lưỡng dụng cần được phân loại chiến lược và xác minh người sử dụng cuối cùng cũng như mục đích sử dụng."],
+ ["Việc chuyển hàng đã ở nước ngoài sang nước thứ ba không thuộc phạm vi kiểm soát xuất khẩu.","Tái xuất (re-export) và chuyển giao trong nước (in-country transfer) cũng bị kiểm soát."],
+ ["Với đối tác đã hợp tác lâu năm thì được miễn nghĩa vụ báo cáo giao dịch đáng ngờ.","Thời gian hợp tác không liên quan. Chỉ cần có dấu hiệu nghi ngờ rửa tiền là phát sinh nghĩa vụ báo cáo."],
+ ["Chia nhỏ một giao dịch thành nhiều lần để tránh ngưỡng báo cáo tự nó đã là hành vi vi phạm.","Chia nhỏ giao dịch là thủ đoạn rửa tiền điển hình, nhân viên thực hiện theo yêu cầu cũng có thể chịu trách nhiệm."],
+ ["Yêu cầu chuyển tiền vào tài khoản ở nước thứ ba hay cấu trúc giao dịch phức tạp không cần thiết là dấu hiệu cảnh báo rửa tiền.","Tài khoản khác với bên ký hợp đồng, đi vòng qua thiên đường thuế, phức tạp không có lý do đều phải kiểm tra ngay."],
+ ["Đạo luật chống hối lộ của Anh cấm cả khoản chi bôi trơn nhỏ, không có ngoại lệ.","UK Bribery Act không có ngoại lệ cho khoản chi bôi trơn, và chính sách công ty thường cũng cấm."],
+ ["Quà tặng và tiếp khách chỉ cần giá trị nhỏ thì luôn được phép, bất kể chính sách công ty.","Dù giá trị nhỏ, tùy thời điểm, đối tượng và mục đích vẫn có thể bị coi là hối lộ. Hãy tuân thủ hạn mức và quy trình phê duyệt trước."],
+ ["Nhận con của công chức vào thực tập theo đề nghị của họ cũng có thể là hối lộ.","Không cần là tiền; bất kỳ thứ gì có giá trị cũng có thể cấu thành hối lộ."],
+ ["Trao đổi thông tin giá với đối thủ chỉ để tham khảo thì không phải là thông đồng.","Trao đổi thông tin về giá, sản lượng, điều kiện giao dịch có thể bị suy đoán là thông đồng dù có thỏa thuận hay không."],
+ ["Khi đối thủ nói về việc tăng giá tại một cuộc gặp ngành, phải phản đối ngay, rời khỏi cuộc họp và ghi lại.","Im lặng có thể bị hiểu là đồng ý ngầm. Nguyên tắc là phản đối, rời đi, ghi nhận và báo cáo bộ phận tuân thủ."],
+ ["Ép buộc đại lý bán theo giá bán lại ấn định có thể vi phạm luật cạnh tranh.","Duy trì giá bán lại về nguyên tắc bị cấm. Cần phân biệt giá đề xuất và giá áp đặt."],
+ ["Sử dụng dữ liệu cá nhân ngoài mục đích thu thập ban đầu cần có sự đồng ý riêng.","Nguyên tắc giới hạn mục đích. Mục đích mới cần sự đồng ý riêng hoặc căn cứ pháp lý khác."],
+ ["Mức phạt vi phạm GDPR có thể lên tới 4% doanh thu toàn cầu hằng năm.","Mức trần là 20 triệu euro hoặc 4% doanh thu toàn cầu hằng năm, tùy mức nào cao hơn."],
+ ["Gửi dữ liệu cá nhân của khách hàng qua ứng dụng nhắn tin cá nhân là chấp nhận được vì tiện lợi.","Gửi qua kênh chưa được phê duyệt sẽ bị xử lý như sự cố lộ lọt. Chỉ dùng hệ thống công ty đã phê duyệt."],
+ ["Đạo luật AI của EU quản lý hệ thống AI theo mức độ rủi ro.","Cách tiếp cận dựa trên rủi ro: cấm, rủi ro cao, rủi ro hạn chế và rủi ro tối thiểu có nghĩa vụ khác nhau."],
+ ["Nhập tài liệu mật của công ty vào dịch vụ AI tạo sinh không phải là lộ lọt thông tin.","Nhập vào dịch vụ AI bên ngoài có thể bị coi là cung cấp cho bên thứ ba. Chỉ dùng môi trường nội bộ đã được phê duyệt."],
+ ["Dù bản thảo do AI viết, trách nhiệm cuối cùng về nội dung vẫn thuộc về con người.","AI là công cụ. Người rà soát, phê duyệt, nộp tài liệu và công ty chịu trách nhiệm."],
+ ["Công ty có thể phải chịu trách nhiệm về hành vi hối lộ do đại lý hoặc bên trung gian thực hiện.","Hối lộ gián tiếp qua bên thứ ba cũng bị xử lý. Trách nhiệm phát sinh khi công ty biết hoặc buộc phải biết."],
+ ["Thẩm định bên thứ ba có thể thực hiện sau khi đã ký hợp đồng.","Thẩm định phải hoàn tất trước khi ký. Rủi ro phát hiện sau đó đã là rủi ro của công ty."],
+ ["Bên trung gian có mức hoa hồng cao bất thường so với thông lệ ngành là dấu hiệu cảnh báo hối lộ.","Hoa hồng quá cao, năng lực không rõ ràng, quan hệ với công chức đều là dấu hiệu cảnh báo về bên thứ ba."],
+ ["Việc xác minh chủ sở hữu hưởng lợi cuối cùng (UBO) cũng cần thiết với đối tác là pháp nhân.","Chỉ khi xác định được chủ sở hữu thực sự đứng sau pháp nhân mới lọc được rủi ro trừng phạt và rửa tiền."],
+ ["KYC đối với đối tác chỉ cần làm một lần khi ký hợp đồng đầu tiên.","Thay đổi sở hữu, bị chỉ định trừng phạt, kiện tụng đều có thể xảy ra nên cần rà soát định kỳ và theo sự kiện."],
+ ["Việc đối tác từ chối hoặc trì hoãn nộp hồ sơ cơ bản tự nó đã là tín hiệu cần kiểm tra.","Doanh nghiệp bình thường không gặp khó khăn khi nộp hồ sơ KYC cơ bản. Từ chối hay trì hoãn là tín hiệu rủi ro."]]};
+
+/* ============ engine ============ */
+
+window.QUIZ_DATA={LANGS,META,COLORS,T};
+
+</script><script>
+/* Compliance Breaker: Neon Protocol — self-contained WebGL arcade engine. */
+(() => {
+'use strict';
+const $=id=>document.getElementById(id), cv=$('scene');
+const gl=cv.getContext('webgl',{antialias:false,alpha:false,powerPreference:'high-performance'});
+if(!gl){$('error').hidden=false;return;}
+const {T,META}=window.QUIZ_DATA;
+const C=['#ff4d87','#ff9c55','#ffd65c','#77e7a3','#51eddd','#59b7ff','#ae85ff','#ef7aff','#83bed4'];
+const text={
+en:{score:'SCORE',best:'BEST',sector:'SECTOR',integrity:'SHIELDS',risk:'RISK MATRIX',correct:'CORRECT',pulse:'PULSE BURST',launch:'LAUNCH ↗',start:'ENTER THE ARENA  ↗',intro:'Shatter risk. Chain your hits. Take down the reactor. Your next high score starts here.',controls:'Move mouse / drag to steer · Tap to launch',checkpoint:'Risk checkpoint',true:'True',false:'False',continue:'CONTINUE ↗',cleared:'SECTOR SECURED',chooseUpgrade:'Choose your upgrade.',paused:'Take a breath.',pauseHelp:'Your run is paused. Aim with the edge of your paddle to send the ball into a new angle.',resume:'RESUME',restart:'RESTART RUN',menu:'MAIN MENU',settings:'Settings',quality:'Graphics quality',motion:'Camera shake & flashes',sound:'Sound & synth music',maxCombo:'BEST COMBO',accuracy:'QUIZ ACCURACY',endless:'ENTER ENDLESS MODE ↗',retry:'PLAY AGAIN ↗',wide:'Wide shield',wideDesc:'Paddle permanently 18% wider.',reactor:'Overcharged core',reactorDesc:'Earn pulse energy 35% faster.',life:'Repair shields',lifeDesc:'Restore one shield. Start next sector with multiball.',sectorClear:'Sector cleared. +1,000 points. Pick a boost for the rest of this run.',quizGood:'Correct! +500 · wide shield · +30% energy',quizBad:'Not quite. Correct answer: ',quizPenalty:' · narrow shield for 8 seconds',ready:'READY · SPACE',launchHint:'Tap LAUNCH or click the arena',pulseNeed:'Charge pulse by breaking blocks',pulseGo:'PULSE BURST!',multi:'MULTIBALL',laser:'TWIN LASERS',slow:'TIME DILATION',wideBuff:'WIDE SHIELD',narrow:'NARROW SHIELD',shield:'SHIELD RESTORED',win:'Protocol complete.',lose:'One more run?',winCopy:'All three sectors secured. The reactor is down. Push further in endless mode or chase a new best.',loseCopy:'The arena got you this time. Take your upgrades and your timing into another run.',review:'Review these checkpoints',noMiss:'No missed questions this run.',reviewEmpty:'Hit a glowing ? block to unlock a compliance checkpoint.',boss:'OMEGA REACTOR ONLINE',bossDown:'REACTOR DESTROYED',lastBlocks:'FINAL TARGETS · seeker assist',bank:'BANK SHOT',bestNew:'NEW PERSONAL BEST',lost:'Shield lost · relaunch when ready',loading:'NEON PROTOCOL'},
+ko:{score:'점수',best:'최고 기록',sector:'스테이지',integrity:'방어막',risk:'리스크 매트릭스',correct:'퀴즈 정답',pulse:'펄스 버스트',launch:'발사 ↗',start:'아레나 입장  ↗',intro:'리스크를 부수고, 콤보를 쌓으세요. 강력한 업그레이드로 마지막 리액터까지 돌파하세요.',controls:'마우스 이동 / 드래그로 조작 · 탭으로 발사',checkpoint:'리스크 체크포인트',true:'맞다',false:'아니다',continue:'계속 ↗',cleared:'스테이지 클리어',chooseUpgrade:'업그레이드를 고르세요.',paused:'잠시 쉬어가세요.',pauseHelp:'게임이 일시 정지되었습니다. 방패 가장자리로 공을 받으면 더 큰 각도로 튕겨 나갑니다.',resume:'게임 계속',restart:'처음부터 다시',menu:'메인 화면',settings:'설정',quality:'그래픽 품질',motion:'카메라 흔들림 · 섬광',sound:'효과음 · 신스 음악',maxCombo:'최대 콤보',accuracy:'퀴즈 정답률',endless:'무한 모드 도전 ↗',retry:'다시 도전 ↗',wide:'와이드 실드',wideDesc:'이번 도전 동안 방패 너비 18% 증가',reactor:'오버차지 코어',reactorDesc:'펄스 에너지 충전 속도 35% 증가',life:'방어막 복구',lifeDesc:'방어막 +1 · 다음 스테이지 멀티볼 시작',sectorClear:'스테이지 클리어! +1,000점. 다음 전투를 위한 능력을 선택하세요.',quizGood:'정답! +500점 · 방패 확장 · 에너지 +30%',quizBad:'오답 · 정답은 ',quizPenalty:' · 방패 축소 8초',ready:'준비 완료 · SPACE',launchHint:'발사 버튼 또는 아레나를 탭하세요',pulseNeed:'벽돌을 부수면 펄스가 충전됩니다',pulseGo:'펄스 버스트!',multi:'멀티볼',laser:'트윈 레이저',slow:'타임 슬로우',wideBuff:'와이드 실드',narrow:'방패 축소',shield:'방어막 복구',win:'프로토콜 완료.',lose:'한 번 더 도전할까요?',winCopy:'세 스테이지와 리액터를 모두 격파했습니다. 무한 모드에서 더 높은 기록에 도전하세요.',loseCopy:'이번 도전은 여기까지! 퀴즈를 복습하고 새로운 최고 기록을 노려보세요.',review:'다시 확인할 체크포인트',noMiss:'이번 도전에서 틀린 퀴즈가 없습니다.',reviewEmpty:'빛나는 ? 벽돌을 깨면 컴플라이언스 퀴즈가 등장합니다.',boss:'오메가 리액터 가동',bossDown:'리액터 격파!',lastBlocks:'마지막 타깃 · 유도 보정',bank:'뱅크 샷',bestNew:'최고 기록 경신',lost:'방어막 -1 · 준비되면 다시 발사',loading:'네온 프로토콜'},
+zh:{score:'分数',best:'最高分',sector:'关卡',integrity:'护盾',risk:'风险矩阵',correct:'答对',pulse:'脉冲爆发',launch:'发射 ↗',start:'进入竞技场 ↗',intro:'击碎风险，连击得分。收集强化，击败最终反应堆。',controls:'移动鼠标 / 拖动护盾 · 点击发射',checkpoint:'风险检查',true:'正确',false:'错误',continue:'继续 ↗',cleared:'关卡完成',chooseUpgrade:'选择强化。',paused:'已暂停',resume:'继续游戏',restart:'重新开始',menu:'主菜单',settings:'设置',quality:'画质',motion:'镜头震动与闪光',sound:'音效与音乐',retry:'再玩一次 ↗',endless:'进入无尽模式 ↗',accuracy:'答题正确率',maxCombo:'最高连击',wide:'护盾扩展',wideDesc:'本局护盾宽度永久增加18%。',reactor:'过载核心',reactorDesc:'脉冲充能速度增加35%。',life:'修复护盾',lifeDesc:'恢复一层护盾，下一关获得多球。',win:'任务完成。',lose:'再挑战一次？'},
+ja:{score:'スコア',best:'ベスト',sector:'ステージ',integrity:'シールド',risk:'リスク一覧',correct:'正解',pulse:'パルスバースト',launch:'発射 ↗',start:'アリーナへ ↗',intro:'リスクを砕き、コンボをつなげ。強化を集めて最後のリアクターを倒そう。',controls:'マウス移動 / ドラッグで操作 · タップで発射',checkpoint:'リスクチェック',true:'正しい',false:'誤り',continue:'続ける ↗',cleared:'ステージクリア',chooseUpgrade:'強化を選ぼう。',paused:'一時停止',resume:'ゲームを再開',restart:'最初から',menu:'メイン画面',settings:'設定',quality:'画質',motion:'カメラ振動・フラッシュ',sound:'効果音・音楽',retry:'もう一度 ↗',endless:'エンドレスモード ↗',accuracy:'クイズ正解率',maxCombo:'最大コンボ',wide:'ワイドシールド',wideDesc:'今回のプレイ中、幅が18%増加。',reactor:'オーバーチャージ',reactorDesc:'パルス充電速度が35%増加。',life:'シールド修復',lifeDesc:'シールド+1、次のステージはマルチボール。',win:'プロトコル完了。',lose:'もう一度挑戦？'},
+vi:{score:'ĐIỂM',best:'KỶ LỤC',sector:'MÀN',integrity:'LÁ CHẮN',risk:'RỦI RO',correct:'ĐÚNG',pulse:'XUNG NĂNG LƯỢNG',launch:'PHÓNG ↗',start:'VÀO ĐẤU TRƯỜNG ↗',intro:'Phá vỡ rủi ro. Nối chuỗi combo. Thu thập nâng cấp và đánh bại lò phản ứng.',controls:'Di chuột / kéo để điều khiển · Chạm để phóng',checkpoint:'Kiểm tra rủi ro',true:'Đúng',false:'Sai',continue:'TIẾP TỤC ↗',cleared:'HOÀN THÀNH MÀN',chooseUpgrade:'Chọn nâng cấp.',paused:'Tạm dừng',resume:'TIẾP TỤC',restart:'CHƠI LẠI',menu:'MÀN HÌNH CHÍNH',settings:'Cài đặt',quality:'Chất lượng đồ họa',motion:'Rung camera & chớp sáng',sound:'Âm thanh & nhạc',retry:'CHƠI LẠI ↗',endless:'CHẾ ĐỘ VÔ TẬN ↗',accuracy:'TỶ LỆ ĐÚNG',maxCombo:'COMBO CAO NHẤT',wide:'Lá chắn rộng',wideDesc:'Tăng chiều rộng 18% trong lượt chơi.',reactor:'Lõi quá tải',reactorDesc:'Nạp xung nhanh hơn 35%.',life:'Sửa lá chắn',lifeDesc:'Thêm một lá chắn và nhiều bóng ở màn sau.',win:'Hoàn thành.',lose:'Thử lại nhé?'}
+};
+let lang='ko', quality=innerWidth<700?'balanced':'high', motion=!matchMedia('(prefers-reduced-motion: reduce)').matches, sound=true,best=0;
+try{const pref=JSON.parse(localStorage.getItem('neon-protocol-settings')||'{}');lang=T[pref.lang]?pref.lang:'ko';quality=pref.quality||quality;motion=pref.motion??motion;sound=pref.sound??true;best=+(localStorage.getItem('neon-protocol-best')||0);}catch{}
+const tr=k=>text[lang]?.[k]??text.en[k]??k;
+const clamp=(v,a,b)=>Math.max(a,Math.min(b,v)),rand=(a,b)=>a+Math.random()*(b-a),hex=s=>[parseInt(s.slice(1,3),16)/255,parseInt(s.slice(3,5),16)/255,parseInt(s.slice(5,7),16)/255];
+const palette=C.map(hex),cyan=hex('#66f4ff'),pink=hex('#ff529a'),gold=hex('#ffce70');
+function savePrefs(){try{localStorage.setItem('neon-protocol-settings',JSON.stringify({lang,quality,motion,sound}));}catch{}}
+function translate(){document.documentElement.lang=lang;document.querySelectorAll('[data-i]').forEach(el=>el.textContent=tr(el.dataset.i));$('language').value=lang;$('intro').textContent=tr('intro');$('introControls').textContent=tr('controls');$('controls').innerHTML=tr('controls')+'<br><kbd>←</kbd> <kbd>→</kbd> &nbsp; <kbd>SPACE</kbd> '+tr('pulse')+' &nbsp; <kbd>P</kbd> Ⅱ';$('quality').value=quality;$('motion').checked=motion;$('audioSetting').checked=sound;updateSound();updateHUD();}
+// ---------- compact 3D math & geometry ----------
+const dot=(a,b)=>a[0]*b[0]+a[1]*b[1]+a[2]*b[2],sub=(a,b)=>a.map((v,i)=>v-b[i]),cross=(a,b)=>[a[1]*b[2]-a[2]*b[1],a[2]*b[0]-a[0]*b[2],a[0]*b[1]-a[1]*b[0]],norm=a=>{let m=Math.hypot(...a)||1;return a.map(v=>v/m)};
+function mul(a,b){let r=new Float32Array(16);for(let c=0;c<4;c++)for(let row=0;row<4;row++)for(let k=0;k<4;k++)r[c*4+row]+=a[k*4+row]*b[c*4+k];return r;}
+function perspective(fov,aspect,near,far){const f=1/Math.tan(fov/2),nf=1/(near-far);return new Float32Array([f/aspect,0,0,0,0,f,0,0,0,0,(far+near)*nf,-1,0,0,2*far*near*nf,0]);}
+function look(eye,target){const z=norm(sub(eye,target)),x=norm(cross([0,1,0],z)),y=cross(z,x);return new Float32Array([x[0],y[0],z[0],0,x[1],y[1],z[1],0,x[2],y[2],z[2],0,-dot(x,eye),-dot(y,eye),-dot(z,eye),1]);}
+let vertices=[];
+function tri(a,b,c,col,em=0){let n=norm(cross(sub(b,a),sub(c,a)));for(const p of [a,b,c])vertices.push(...p,...n,...col,em);}
+function quad(a,b,c,d,col,em=0){tri(a,b,c,col,em);tri(a,c,d,col,em);}
+function box(x,y,z,w,h,d,col,em=0,rot=0){const co=Math.cos(rot),si=Math.sin(rot);const p=[[-1,-1,-1],[1,-1,-1],[1,-1,1],[-1,-1,1],[-1,1,-1],[1,1,-1],[1,1,1],[-1,1,1]].map(([a,b,c])=>[x+a*w/2*co-c*d/2*si,y+b*h/2,z+a*w/2*si+c*d/2*co]);for(const f of [[4,7,6,5],[0,1,2,3],[3,2,6,7],[1,0,4,5],[0,3,7,4],[2,1,5,6]])quad(...f.map(i=>p[i]),col,em);}
+function bevel(x,y,z,w,h,d,col,em=0,rot=0,b=.13){b=Math.min(b,w/4,h/3,d/4);const co=Math.cos(rot),si=Math.sin(rot),pts=(W,D,Y)=>[[-W/2+b,-D/2],[W/2-b,-D/2],[W/2,-D/2+b],[W/2,D/2-b],[W/2-b,D/2],[-W/2+b,D/2],[-W/2,D/2-b],[-W/2,-D/2+b]].map(([a,c])=>[x+a*co-c*si,y+Y,z+a*si+c*co]);const top=pts(w-b,d-b,h/2),rim=pts(w,d,h/2-b),bot=pts(w,d,-h/2+b),end=pts(w-b,d-b,-h/2);for(let i=0;i<8;i++){let j=(i+1)%8;tri([x,y+h/2,z],top[j],top[i],col,em);quad(top[i],top[j],rim[j],rim[i],col,em);quad(rim[i],rim[j],bot[j],bot[i],col,em);quad(bot[i],bot[j],end[j],end[i],col,em);}}
+function sphere(x,y,z,r,col,em=0,segments=12,rings=7){for(let i=0;i<rings;i++)for(let j=0;j<segments;j++){const p=(a,b)=>[x+r*Math.sin(a)*Math.cos(b),y+r*Math.cos(a),z+r*Math.sin(a)*Math.sin(b)],a=i/rings*Math.PI,b=(i+1)/rings*Math.PI,c=j/segments*6.283,d=(j+1)/segments*6.283;quad(p(a,c),p(a,d),p(b,d),p(b,c),col,em);}}
+function ring(x,y,z,r,w,col,em=1,segments=48,start=0,arc=Math.PI*2){for(let i=0;i<segments;i++){const a=start+i/segments*arc,b=start+(i+1)/segments*arc;quad([x+Math.cos(a)*r,y,z+Math.sin(a)*r],[x+Math.cos(a)*(r+w),y,z+Math.sin(a)*(r+w)],[x+Math.cos(b)*(r+w),y,z+Math.sin(b)*(r+w)],[x+Math.cos(b)*r,y,z+Math.sin(b)*r],col,em);}}
+function line3(a,b,width,col,em=1){const dx=b[0]-a[0],dz=b[2]-a[2];box((a[0]+b[0])/2,(a[1]+b[1])/2,(a[2]+b[2])/2,width,.035,Math.hypot(dx,dz),col,em,-Math.atan2(dx,dz));}
+function program(vs,fs){function sh(type,src){let s=gl.createShader(type);gl.shaderSource(s,src);gl.compileShader(s);if(!gl.getShaderParameter(s,gl.COMPILE_STATUS))throw Error(gl.getShaderInfoLog(s));return s;}let p=gl.createProgram();gl.attachShader(p,sh(gl.VERTEX_SHADER,vs));gl.attachShader(p,sh(gl.FRAGMENT_SHADER,fs));gl.linkProgram(p);if(!gl.getProgramParameter(p,gl.LINK_STATUS))throw Error(gl.getProgramInfoLog(p));return p;}
+let main,post;try{
+main=program(`attribute vec3 p;attribute vec3 n;attribute vec3 c;attribute float e;uniform mat4 vp;varying vec3 P,N,C;varying float E;void main(){P=p;N=n;C=c;E=e;gl_Position=vp*vec4(p,1.);}`,`precision mediump float;varying vec3 P,N,C;varying float E;uniform vec3 eye;uniform float time;void main(){vec3 normal=normalize(N);vec3 view=normalize(eye-P);vec3 light=normalize(vec3(-.5,1.,.45));float diffuse=max(dot(normal,light),0.);float spec=pow(max(dot(reflect(-light,normal),view),0.),34.);float rim=pow(1.-max(dot(normal,view),0.),3.);vec3 base=C*(.23+.67*diffuse)+vec3(.38,.68,.85)*spec*.48;float cy=exp(-abs(P.x-8.)*.7)+exp(-abs(P.x+8.)*.7);base+=C*cy*.25+vec3(.015,.065,.09)*rim;float f=clamp(length(P.xz)/85.,0.,.32);base=mix(base,vec3(.014,.027,.052),f);base=mix(base,C,E);gl_FragColor=vec4(base,1.);}`);
+post=program(`attribute vec2 a;varying vec2 uv;void main(){uv=(a+1.)*.5;gl_Position=vec4(a,0.,1.);}`,`precision mediump float;varying vec2 uv;uniform sampler2D tex;uniform sampler2D bloom;uniform vec2 delta;uniform float pass;uniform float strength;vec3 bright(vec3 c){return max(c-vec3(.49),vec3(0.))*2.;}void main(){if(pass<.5){vec3 c=bright(texture2D(tex,uv).rgb)*.227027;c+=bright(texture2D(tex,uv+delta*1.384615).rgb)*.316216;c+=bright(texture2D(tex,uv-delta*1.384615).rgb)*.316216;c+=bright(texture2D(tex,uv+delta*3.230769).rgb)*.07027;c+=bright(texture2D(tex,uv-delta*3.230769).rgb)*.07027;gl_FragColor=vec4(c,1.);}else if(pass<1.5){vec3 c=texture2D(tex,uv).rgb*.227027;c+=texture2D(tex,uv+delta*1.384615).rgb*.316216;c+=texture2D(tex,uv-delta*1.384615).rgb*.316216;c+=texture2D(tex,uv+delta*3.230769).rgb*.07027;c+=texture2D(tex,uv-delta*3.230769).rgb*.07027;gl_FragColor=vec4(c,1.);}else{vec3 c=texture2D(tex,uv).rgb;vec3 b=texture2D(bloom,uv).rgb;c+=b*strength;float vig=1.-.26*pow(length(uv-.5),1.6);gl_FragColor=vec4(pow(c*vig,vec3(.9)),1.);}}`);
+}catch(e){$('error').hidden=false;console.error(e);return;}
+const loc={};for(const k of ['p','n','c','e'])loc[k]=gl.getAttribLocation(main,k);for(const k of ['vp','eye','time'])loc[k]=gl.getUniformLocation(main,k);
+const pl={a:gl.getAttribLocation(post,'a')};for(const k of ['tex','bloom','delta','pass','strength'])pl[k]=gl.getUniformLocation(post,k);
+const staticBuffer=gl.createBuffer(),dynamicBuffer=gl.createBuffer(),screenBuffer=gl.createBuffer();gl.bindBuffer(gl.ARRAY_BUFFER,screenBuffer);gl.bufferData(gl.ARRAY_BUFFER,new Float32Array([-1,-1,1,-1,-1,1,-1,1,1,-1,1,1]),gl.STATIC_DRAW);
+let targets=[],width=0,height=0,vp,eye=[0,27,22],paddleScreen=[0,1],staticCount=0;
+function target(w,h,depth){let tex=gl.createTexture();gl.bindTexture(gl.TEXTURE_2D,tex);gl.texImage2D(gl.TEXTURE_2D,0,gl.RGBA,w,h,0,gl.RGBA,gl.UNSIGNED_BYTE,null);gl.texParameteri(gl.TEXTURE_2D,gl.TEXTURE_MIN_FILTER,gl.LINEAR);gl.texParameteri(gl.TEXTURE_2D,gl.TEXTURE_MAG_FILTER,gl.LINEAR);gl.texParameteri(gl.TEXTURE_2D,gl.TEXTURE_WRAP_S,gl.CLAMP_TO_EDGE);gl.texParameteri(gl.TEXTURE_2D,gl.TEXTURE_WRAP_T,gl.CLAMP_TO_EDGE);let fb=gl.createFramebuffer();gl.bindFramebuffer(gl.FRAMEBUFFER,fb);gl.framebufferTexture2D(gl.FRAMEBUFFER,gl.COLOR_ATTACHMENT0,gl.TEXTURE_2D,tex,0);let rb=null;if(depth){rb=gl.createRenderbuffer();gl.bindRenderbuffer(gl.RENDERBUFFER,rb);gl.renderbufferStorage(gl.RENDERBUFFER,gl.DEPTH_COMPONENT16,w,h);gl.framebufferRenderbuffer(gl.FRAMEBUFFER,gl.DEPTH_ATTACHMENT,gl.RENDERBUFFER,rb);}if(gl.checkFramebufferStatus(gl.FRAMEBUFFER)!==gl.FRAMEBUFFER_COMPLETE)throw Error('Framebuffer unavailable');return{tex,fb,rb,w,h};}
+function resize(){let dpr=Math.min(devicePixelRatio||1,quality==='high'?1.8:quality==='balanced'?1.35:1);width=Math.max(1,Math.round(innerWidth*dpr));height=Math.max(1,Math.round(innerHeight*dpr));cv.width=width;cv.height=height;for(let t of targets){gl.deleteTexture(t.tex);gl.deleteFramebuffer(t.fb);if(t.rb)gl.deleteRenderbuffer(t.rb);}targets=[target(width,height,true),target(Math.max(1,width>>1),Math.max(1,height>>1)),target(Math.max(1,width>>1),Math.max(1,height>>1))];}
+function project(p){let v=[...p,1],r=[0,0,0,0];for(let i=0;i<4;i++)for(let j=0;j<4;j++)r[i]+=vp[j*4+i]*v[j];return[(r[0]/r[3]*.5+.5)*innerWidth,(-r[1]/r[3]*.5+.5)*innerHeight];}
+// Permanent arena meshes: layered alloy deck, luminous circuitry, tower fins, bolts, vents.
+function makeArena(){vertices=[];box(0,-.8,-1,19,.9,27,hex('#102239'));bevel(0,-.29,-1,18.1,.5,25.7,hex('#253951'),0,0,.16);box(0,-.02,-1,16.1,.08,23.8,hex('#0a1b2b'));
+for(let x=-7.5;x<8;x+=1)for(let z=-12;z<11;z+=1){box(x,.025,z,.965,.013,.965,[(x+8)*.001+.031,.065,.096]);box(x,.035,z+.48,.93,.009,.009,hex('#164357'),.17);}
+for(let x of [-8.35,8.35]){bevel(x,.2,-1,.64,.72,25,hex('#354d63'));box(x,.59,-1,.18,.075,24.2,cyan,1);box(x,.01,-1,.85,.06,24.8,hex('#092832'));for(let z=-12;z<11;z+=1.2){box(x,.61,z,.34,.035,.16,hex('#c1eff5'),.8);box(x+Math.sign(x)*.34,.13,z,.16,.22,.65,hex('#111e2c'));}}
+bevel(0,.3,-13,17.1,1,.6,hex('#3d4e64'));box(0,.85,-13,16.6,.04,.13,pink,.95);box(0,.06,10.65,16,.05,.1,pink,.8);
+for(let z of [-11.8,-.2,7.2])for(let x of [-7.7,7.7])box(x,.052,z,.2,.02,.7,cyan,.48);
+for(let x of [-6,-3,0,3,6]){box(x,.052,5.8,.035,.02,.6,hex('#246c87'),.6);box(x,.052,6.08,.45,.02,.035,hex('#246c87'),.6);}
+ring(0,.045,2.1,2.6,.025,hex('#22667c'),.6,80);ring(0,.046,2.1,2.82,.025,hex('#195365'),.45,80);for(let i=0;i<12;i++){let a=i*Math.PI/6;line3([Math.cos(a)*2.6,.05,2.1+Math.sin(a)*2.6],[Math.cos(a)*2.8,.05,2.1+Math.sin(a)*2.8],.035,hex('#47849d'),.5);}
+for(let side of [-1,1])for(let i=0;i<6;i++){let x=side*(9.5+(i%2)*.9),z=-11+i*4.3,h=1.7+(i%3)*.6;bevel(x,h/2-.3,z,1.2,h,2.4,hex('#1a2c42'));bevel(x,h-.27,z,1.3,.2,2.45,hex('#526579'));box(x,h-.11,z,.7,.035,1.6,hex('#0a1827'));for(let j=0;j<5;j++)box(x,h-.08,z-.6+j*.3,.6,.04,.07,j===i%5?cyan:hex('#284453'),j===i%5?.95:0);box(x-side*.63,h/2-.1,z,.055,h*.7,1.5,i%2?pink:cyan,.85);for(let k of [-.7,.7]){box(x+.38,h-.1,z+k,.11,.08,.12,hex('#8299aa'));box(x-.38,h-.1,z+k,.11,.08,.12,hex('#8299aa'));}}
+for(let i=0;i<30;i++){let a=i*.792,x=Math.sin(a)*(15+i%5*1.6),z=Math.cos(a)*(18+i%4*1.5)-5,h=1+(i%6)*1.5;box(x,h/2-2.7,z,1.1+(i%3)*.6,h,1.5,hex('#101d30'));for(let j=0;j<3;j++)box(x-.56,h/2-1.5+j*.5,z,.02,.15,.4,j%2?cyan:pink,.45);}
+for(let s of stars){const col=s.phase>3?cyan:pink;sphere(s.x,s.y,s.z,s.r,col.map(v=>v*.4),1,4,3);}
+staticCount=vertices.length/10;gl.bindBuffer(gl.ARRAY_BUFFER,staticBuffer);gl.bufferData(gl.ARRAY_BUFFER,new Float32Array(vertices),gl.STATIC_DRAW);vertices=[];}
+// ---------- audio synthesizer; all sound is created locally ----------
+let ac=null,musicNext=0,musicStep=0;
+function initAudio(){if(!sound)return;try{if(!ac)ac=new(window.AudioContext||window.webkitAudioContext)();if(ac.state==='suspended')ac.resume().catch(()=>{});}catch{}}
+function tone(freq=440,dur=.1,type='sine',vol=.035,slide=0,delay=0){if(!sound||!ac||ac.state!=='running')return;const t=ac.currentTime+delay,o=ac.createOscillator(),g=ac.createGain();o.type=type;o.frequency.setValueAtTime(freq,t);if(slide)o.frequency.exponentialRampToValueAtTime(Math.max(30,freq+slide),t+dur);g.gain.setValueAtTime(.0001,t);g.gain.exponentialRampToValueAtTime(vol,t+.008);g.gain.exponentialRampToValueAtTime(.0001,t+dur);o.connect(g);g.connect(ac.destination);o.start(t);o.stop(t+dur+.01);}
+function hitSound(combo){tone(350+Math.min(combo,20)*27,.085,'triangle',.035,80);tone(100,.07,'sine',.045,-60);}
+function chime(){[0,4,7,12].forEach((n,i)=>tone(330*Math.pow(2,n/12),.22,'sine',.045,0,i*.07));}
+function music(now){if(!sound||!ac||S.mode!=='play'||now<musicNext)return;musicNext=now+.24;let notes=[0,7,12,7,3,10,15,10,5,12,17,12,3,10,15,7],n=notes[musicStep%16];tone(110*Math.pow(2,n/12),.19,'triangle',.008);if(musicStep%4===0)tone(75,.15,'sine',.026,-40);musicStep++;}
+function updateSound(){$('soundBtn').textContent=sound?'♪':'♪̸';$('soundBtn').setAttribute('aria-pressed',String(sound));$('audioSetting').checked=sound;}
+// ---------- deterministic game rules, with bounded substeps ----------
+const PX=7.96,PZ=8.5,R=.24;
+let S,particles=[],ripples=[],floaters=[],lasers=[],powerups=[],left=false,right=false,toastTime=0,clock=0,last=performance.now(),shake=0,flash=0,menuAnim=0,settingsReturn='menu',currentQuestion=null,quizPending=null,lastHud=0,pointerStart=null;
+const seedState=()=>({mode:'menu',score:0,stage:1,lives:3,combo:0,maxCombo:0,comboTime:0,energy:0,width:3.1,target:0,px:0,balls:[],bricks:[],total:0,asked:0,correct:0,wrong:[],used:new Set(),buff:{wide:0,slow:0,laser:0,narrow:0},energyRate:1,time:0,dropCount:0,nextDrop:4,launchMulti:false,endless:false,boss:null,bossHits:0,sectorKills:0,assist:false,pulseCooldown:0,quizzes:0,quizQueue:[],nextLaser:0});
+function ball(x,z,vx=0,vz=0,attached=false){return{x,z,vx,vz,attached,trail:[],bank:0};}
+function speed(){return Math.min(18.2,10.8+S.stage*.75+Math.min(S.combo,20)*.055);}
+function paddleWidth(){return Math.min(7.3,S.width*(S.buff.wide>0?1.43:1)*(S.buff.narrow>0?.74:1));}
+function buildStage(){particles=[];powerups=[];lasers=[];ripples=[];quizPending=null;S.bricks=[];S.balls=[ball(S.px,PZ-.7,0,0,true)];S.buff={wide:0,slow:0,laser:0,narrow:0};S.px=0;S.target=0;S.combo=0;S.comboTime=0;S.sectorKills=0;S.assist=false;S.quizzes=0;S.quizQueue=[];S.nextLaser=0;S.pulseCooldown=0;
+const rows=S.stage===1?4:S.stage===2?6:7;const bossStage=S.stage%3===0;for(let row=0;row<rows;row++)for(let col=0;col<8;col++){if(S.stage>1&&((row+col+S.stage)%9===0))continue;const x=(col-3.5)*1.89,z=-10.2+row*1.17,d=(row+(S.stage-1)*3)%9;const hp=S.stage>1&&row<Math.min(4,S.stage)?2:1;const quiz=(col===(row*3+S.stage)%8&&row<3);S.bricks.push({x,z,w:1.69,d:.94,hp,maxHp:hp,domain:d,quiz,hit:0});}S.total=S.bricks.length;S.boss=bossStage?{x:0,z:-11.75,hp:12+Math.floor(S.stage/3)*4,max:12+Math.floor(S.stage/3)*4,hit:0}:null;updateHUD();if(bossStage&&S.mode==='play')toast(tr('boss'),pink);}
+function startRun(){initAudio();S=seedState();S.mode='play';hideOverlays();buildStage();document.body.dataset.screen='play';toast(tr('launchHint'));$('pauseBtn').disabled=false;updateHUD();}
+function hideOverlays(){for(let id of ['menu','quiz','upgrade','pause','settings','end'])$(id).hidden=true;}
+function setOverlay(mode,id){S.mode=mode;hideOverlays();$(id).hidden=false;left=right=false;pointerStart=null;requestAnimationFrame(()=>$(id).querySelector('button:not([hidden])')?.focus());}
+function toMenu(){S=seedState();buildStage();hideOverlays();$('menu').hidden=false;document.body.dataset.screen='menu';$('pauseBtn').disabled=true;updateHUD();}
+function launch(){if(S.mode!=='play')return;initAudio();let attached=S.balls.filter(b=>b.attached);if(!attached.length)return;const v=speed();for(let b of attached){b.attached=false;b.vx=rand(-.24,.24)*v;b.vz=-Math.sqrt(v*v-b.vx*b.vx);}if(S.launchMulti){S.launchMulti=false;grant('multi');}tone(240,.22,'sawtooth',.028,600);updateHUD();}
+function toast(msg,color=cyan){$('toast').textContent=msg;$('toast').style.color=`rgb(${color.map(n=>Math.round(n*255)).join(',')})`;$('toast').style.opacity=1;toastTime=2.8;}
+function burst(x,z,col,n=16){let limit=quality==='low'?180:quality==='balanced'?330:600;for(let i=0;i<n&&particles.length<limit;i++){particles.push({x,y:.45,z,vx:rand(-3.8,3.8),vy:rand(2,6),vz:rand(-3.8,3.8),life:rand(.35,.85),max:.85,col,size:rand(.04,.16),rot:rand(0,6.28)});}ripples.push({x,z,r:.12,life:.48,col});if(ripples.length>18)ripples.shift();}
+function shakeIt(n){if(motion)shake=Math.max(shake,n);}
+function addScore(n){S.score+=Math.round(n);}
+function killBrick(k,source='ball',b=null){if(k.hp<=0)return;k.hp--;k.hit=.16;if(k.hp>0){addScore(35);burst(k.x,k.z,palette[k.domain],5);tone(180,.08,'triangle',.045,50);return;}
+S.sectorKills++;S.combo++;S.maxCombo=Math.max(S.maxCombo,S.combo);S.comboTime=4.4;const mult=1+Math.min(4,Math.floor(S.combo/5));addScore((k.quiz?150:100)*mult+(b?.bank?50:0));S.energy=clamp(S.energy+(5.6+(k.quiz?5:0))*S.energyRate,0,100);hitSound(S.combo);burst(k.x,k.z,palette[k.domain],quality==='high'?23:15);shakeIt(.06+Math.min(S.combo,15)*.006);
+if(S.combo===5||S.combo===10||S.combo===20)chime();if(k.quiz){S.quizQueue.push(k.domain);if(!quizPending)quizPending={delay:.7};}
+if(++S.dropCount>=S.nextDrop){S.dropCount=0;S.nextDrop=4+Math.floor(Math.random()*4);const types=['wide','multi','laser','slow','multi','shield'];powerups.push({x:k.x,z:k.z,type:types[Math.floor(Math.random()*types.length)],spin:rand(0,6.28)});}if(b)b.bank=0;
+}
+function hitBoss(){if(!S.boss||S.boss.hp<=0)return;S.boss.hp--;S.boss.hit=.22;S.energy=clamp(S.energy+5*S.energyRate,0,100);addScore(180);burst(S.boss.x,S.boss.z,pink,14);shakeIt(.16);tone(95,.14,'sawtooth',.04,120);if(S.boss.hp<=0){burst(S.boss.x,S.boss.z,gold,65);shakeIt(.7);flash=.6;addScore(2500);toast(tr('bossDown'),gold);chime();}}
+function pulse(){if(S.mode!=='play'||S.balls.every(b=>b.attached))return;if(S.energy<100){toast(tr('pulseNeed'));return;}S.energy=0;S.pulseCooldown=.5;let targets=S.bricks.filter(k=>k.hp>0).sort((a,b)=>Math.hypot(a.x-S.px,a.z-PZ)-Math.hypot(b.x-S.px,b.z-PZ)).slice(0,9);for(let k of targets){k.hp=1;killBrick(k,'pulse');}if(S.boss?.hp>0&&S.bricks.every(k=>k.hp<=0)){for(let i=0;i<3;i++)hitBoss();}ripples.push({x:S.px,z:PZ,r:.4,life:1.2,col:cyan,pulse:true});S.energy=0;shakeIt(.42);flash=.3;tone(90,.8,'sawtooth',.06,650);toast(tr('pulseGo'));updateHUD();}
+function grant(type){if(type==='multi'){const active=S.balls.filter(b=>!b.attached),origin=active[0];if(origin){for(let a of [-.5,.5]){if(S.balls.length>=5)break;let angle=Math.atan2(origin.vx,-origin.vz)+a,v=speed();S.balls.push(ball(origin.x,origin.z,Math.sin(angle)*v,-Math.abs(Math.cos(angle))*v));}}else S.launchMulti=true;}
+if(type==='wide')S.buff.wide=18;if(type==='laser')S.buff.laser=14;if(type==='slow')S.buff.slow=12;if(type==='shield')S.lives=Math.min(5,S.lives+1);toast(tr(type==='wide'?'wideBuff':type),type==='shield'?gold:cyan);chime();burst(S.px,PZ,cyan,18);updateHUD();}
+function askQuiz(){if(!S.quizQueue.length)return;let domain=S.quizQueue.shift();let pool=META.map((m,i)=>i).filter(i=>META[i][0]===domain&&!S.used.has(i));if(!pool.length)pool=META.map((m,i)=>i).filter(i=>!S.used.has(i));if(!pool.length){S.used.clear();pool=META.map((m,i)=>i);}currentQuestion=pool[Math.floor(Math.random()*pool.length)];S.used.add(currentQuestion);S.quizzes++;const d=META[currentQuestion][0];$('qCategory').textContent=T[lang].dom[d];$('qCategory').style.color=C[d];$('question').textContent=T[lang].q[currentQuestion][0];$('answers').hidden=false;$('verdict').hidden=true;$('quizContinue').hidden=true;setOverlay('quiz','quiz');tone(600,.17,'sine',.04);}
+function answer(a){if(S.mode!=='quiz'||currentQuestion===null||$('answers').hidden)return;const i=currentQuestion,correct=META[i][1],ok=a===correct;S.asked++;S.correct+=ok?1:0;const v=$('verdict');v.className='verdict'+(ok?'':' wrong');v.replaceChildren();const head=document.createElement('b');head.textContent=ok?tr('quizGood'):tr('quizBad')+(correct?'O':'X')+tr('quizPenalty');v.append(head,document.createTextNode(T[lang].q[i][1]));v.hidden=false;$('answers').hidden=true;$('quizContinue').hidden=false;if(ok){addScore(500);S.buff.wide=18;S.buff.narrow=0;S.energy=clamp(S.energy+30,0,100);chime();}else{S.wrong.push(i);S.buff.narrow=8;tone(170,.25,'triangle',.04,-80);}updateHUD();$('quizContinue').focus();}
+function quizContinue(){if(S.mode!=='quiz')return;currentQuestion=null;hideOverlays();S.mode='play';if(S.quizQueue.length)quizPending={delay:2};else if(!S.bricks.some(k=>k.hp>0)&&(!S.boss||S.boss.hp<=0))sectorClear();}
+function sectorClear(){if(S.mode!=='play'||quizPending||S.quizQueue.length)return;addScore(1000);chime();if(S.stage===3&&!S.endless){finish(true);return;}$('upgradeInfo').textContent=tr('sectorClear');$('upgradeList').replaceChildren();['wide','reactor','life'].forEach((type,i)=>{const b=document.createElement('button');const icon=document.createElement('span');icon.className='u-icon';icon.textContent=['↔','ϟ','⬡'][i];const label=document.createElement('span'),strong=document.createElement('strong'),desc=document.createElement('small');strong.textContent=tr(type);desc.textContent=tr(type+'Desc');label.append(strong,desc);b.append(icon,label);b.onclick=()=>{if(S.mode!=='upgrade')return;if(type==='wide')S.width=Math.min(5.2,S.width*1.18);if(type==='reactor')S.energyRate+=.35;if(type==='life'){S.lives=Math.min(5,S.lives+1);S.launchMulti=true;}S.stage++;S.mode='play';hideOverlays();buildStage();toast(tr('launchHint'));};$('upgradeList').append(b);});setOverlay('upgrade','upgrade');updateHUD();}
+function finish(win){const previous=best;best=Math.max(best,S.score);try{localStorage.setItem('neon-protocol-best',String(best));}catch{}setOverlay('end','end');$('endEyebrow').textContent=S.score>previous?tr('bestNew'):'NEON PROTOCOL';$('endTitle').textContent=tr(win?'win':'lose');$('endCopy').textContent=tr(win?'winCopy':'loseCopy');$('finalScore').textContent=S.score.toLocaleString();$('finalCombo').textContent=S.maxCombo+'×';$('finalAcc').textContent=S.asked?Math.round(S.correct/S.asked*100)+'%':'—';$('endlessBtn').hidden=!win;const review=$('review');review.replaceChildren();const head=document.createElement('strong');head.textContent=S.wrong.length?tr('review'):tr(S.asked?'noMiss':'reviewEmpty');review.append(head);if(S.wrong.length){const ul=document.createElement('ul');[...new Set(S.wrong)].forEach(i=>{const li=document.createElement('li'),b=document.createElement('strong');b.textContent=T[lang].dom[META[i][0]]+' · '+(META[i][1]?'O':'X');li.append(b,document.createElement('br'),document.createTextNode(T[lang].q[i][0]),document.createElement('br'),document.createTextNode(T[lang].q[i][1]));ul.append(li);});review.append(ul);}updateHUD();}
+function pause(){if(S.mode==='play'){setOverlay('pause','pause');}else if(S.mode==='pause'){initAudio();hideOverlays();S.mode='play';}}
+function updateHUD(){if(!S)return;$('score').textContent=String(S.score).padStart(6,'0');$('best').textContent=best.toLocaleString();$('stage').textContent=String(S.stage).padStart(2,'0');$('stageName').textContent=S.endless?'/ ∞':'/ 03';$('lives').textContent='⬡ '.repeat(Math.max(0,S.lives)).trim()+' ·'.repeat(Math.max(0,3-S.lives));$('progress').style.width=(S.total?S.sectorKills/S.total*100:0)+'%';$('quizScore').textContent=S.correct+' / '+S.asked;$('accuracy').textContent=tr('correct')+' '+S.correct+'/'+S.asked;$('pulseMeter').style.width=S.energy+'%';$('pulseText').textContent=S.energy>=100?tr('ready'):Math.floor(S.energy)+'% · SPACE';$('pulseBtn').classList.toggle('ready',S.energy>=100);$('pulseBtn').disabled=S.mode!=='play'||S.balls.every(b=>b.attached);$('launch').hidden=!S.balls.some(b=>b.attached);$('launch').disabled=S.mode!=='play';$('bossHud').hidden=!S.boss||S.boss.hp<=0||S.mode==='menu';if(S.boss)$('bossBar').style.width=(S.boss.hp/S.boss.max*100)+'%';
+const domains=[...new Set(S.bricks.map(k=>k.domain))];$('riskList').replaceChildren();for(let d of domains){const el=document.createElement('div');el.className='risk-item'+(S.bricks.some(k=>k.domain===d&&k.hp>0)?'':' done');const dot=document.createElement('i');dot.className='risk-dot';dot.style.background=C[d];dot.style.color=C[d];el.append(dot,document.createTextNode(T[lang].dom[d]));$('riskList').append(el);}const buffs=$('buffs');buffs.replaceChildren();for(let key of ['wide','laser','slow','narrow'])if(S.buff[key]>0){const el=document.createElement('span');el.className='buff';el.textContent=tr(key==='wide'?'wideBuff':key)+' '+Math.ceil(S.buff[key])+'s';buffs.append(el);}}
+function brickCollision(b,k){const dx=b.x-clamp(b.x,k.x-k.w/2,k.x+k.w/2),dz=b.z-clamp(b.z,k.z-k.d/2,k.z+k.d/2);if(dx*dx+dz*dz>R*R)return false;if(Math.abs(dx)>Math.abs(dz)){b.vx=dx>=0?Math.abs(b.vx):-Math.abs(b.vx);b.x=k.x+Math.sign(dx||1)*(k.w/2+R+.002);}else{b.vz=dz>=0?Math.abs(b.vz):-Math.abs(b.vz);b.z=k.z+Math.sign(dz||1)*(k.d/2+R+.002);}return true;}
+function tick(dt){S.time+=dt;S.pulseCooldown=Math.max(0,S.pulseCooldown-dt);if(left)S.target-=18*dt;if(right)S.target+=18*dt;let half=paddleWidth()/2;S.target=clamp(S.target,-PX+half,PX-half);S.px+=(S.target-S.px)*Math.min(1,dt*24);for(let key in S.buff)S.buff[key]=Math.max(0,S.buff[key]-dt);S.comboTime-=dt;if(S.comboTime<=0)S.combo=0;
+if(S.boss?.hp>0){S.boss.x=Math.sin(S.time*.65)*4.6;S.boss.hit=Math.max(0,S.boss.hit-dt);}
+if(quizPending){quizPending.delay-=dt;if(quizPending.delay<=0){quizPending=null;askQuiz();return;}}
+const v=speed(),timeScale=S.buff.slow>0?.69:1;let alive=[];for(const b of S.balls){if(b.attached){b.x=S.px;b.z=PZ-.72;alive.push(b);continue;}let mag=Math.hypot(b.vx,b.vz)||v;b.vx=b.vx/mag*v;b.vz=b.vz/mag*v;const steps=Math.max(1,Math.ceil(v*dt*timeScale/.14)),step=dt*timeScale/steps;let lost=false;for(let i=0;i<steps;i++){const oz=b.z;b.x+=b.vx*step;b.z+=b.vz*step;
+if(b.x<-PX+R){b.x=-PX+R;b.vx=Math.abs(b.vx);b.bank++;burst(-PX,b.z,cyan,3);tone(300,.04,'sine',.015);}if(b.x>PX-R){b.x=PX-R;b.vx=-Math.abs(b.vx);b.bank++;burst(PX,b.z,cyan,3);tone(300,.04,'sine',.015);}if(b.z<-12.53+R){b.z=-12.53+R;b.vz=Math.abs(b.vz);b.bank++;}
+if(b.vz>0&&oz<=PZ-.29-R&&b.z>=PZ-.29-R&&Math.abs(b.x-S.px)<half+R){b.z=PZ-.3-R-.001;let rel=clamp((b.x-S.px)/half,-1,1),a=rel*1.06;b.vx=Math.sin(a)*v;b.vz=-Math.cos(a)*v;if(Math.abs(b.vx)<v*.16){b.vx=(b.x>=0?-1:1)*v*rand(.13,.27);b.vz=-Math.sqrt(v*v-b.vx*b.vx);}burst(b.x,b.z,cyan,7);tone(260,.09,'triangle',.028,90);if(S.assist){const target=S.bricks.find(k=>k.hp>0)||S.boss;if(target){const dx=target.x-b.x,dz=target.z-b.z,m=Math.hypot(dx,dz);b.vx=dx/m*v;b.vz=dz/m*v;}}}
+for(let k of S.bricks)if(k.hp>0&&brickCollision(b,k)){killBrick(k,'ball',b);break;}
+if(S.boss?.hp>0&&Math.abs(b.x-S.boss.x)<1.28&&Math.abs(b.z-S.boss.z)<.68){b.vz=b.z>S.boss.z?Math.abs(b.vz):-Math.abs(b.vz);b.z=S.boss.z+Math.sign(b.vz)*.7;hitBoss();}
+if(b.z>11.2){lost=true;break;}}
+if(!lost){if(Math.abs(b.vz)<v*.3){b.vz=Math.sign(b.vz||-1)*v*.3;b.vx=Math.sign(b.vx||1)*Math.sqrt(v*v-b.vz*b.vz);}b.trail.unshift([b.x,b.z]);if(b.trail.length>16)b.trail.pop();alive.push(b);}}
+S.balls=alive;if(!S.balls.length){S.lives--;S.combo=0;S.buff.wide=0;S.buff.narrow=0;S.buff.laser=0;shakeIt(.4);tone(200,.4,'sawtooth',.04,-150);if(S.lives<=0){finish(false);return;}S.balls=[ball(S.px,PZ-.7,0,0,true)];toast(tr('lost'),pink);updateHUD();}
+if(S.buff.laser>0&&S.balls.some(b=>!b.attached)){S.nextLaser-=dt;if(S.nextLaser<=0){S.nextLaser=.28;for(let x of [S.px-half+.25,S.px+half-.25])lasers.push({x,z:PZ-.65});tone(1000,.045,'sine',.008,350);}}
+lasers=lasers.filter(l=>{l.z-=22*dt;for(const k of S.bricks)if(k.hp>0&&Math.abs(l.x-k.x)<k.w/2&&Math.abs(l.z-k.z)<k.d/2+.6){killBrick(k,'laser');return false;}if(S.boss?.hp>0&&Math.abs(l.x-S.boss.x)<1.2&&Math.abs(l.z-S.boss.z)<.6){hitBoss();return false;}return l.z>-13;});
+powerups=powerups.filter(p=>{p.z+=3.65*dt;p.spin+=dt*2;if(Math.abs(p.z-PZ)<.55&&Math.abs(p.x-S.px)<half+.45){grant(p.type);return false;}return p.z<11;});
+let remaining=S.bricks.filter(k=>k.hp>0).length;if(remaining<=3&&!S.assist){S.assist=true;toast(tr('lastBlocks'),gold);}if(!remaining&&(!S.boss||S.boss.hp<=0)&&!quizPending&&!S.quizQueue.length)sectorClear();}
+// ---------- render ----------
+const stars=Array.from({length:100},()=>({x:rand(-30,30),y:rand(-2,12),z:rand(-30,16),r:rand(.013,.045),phase:rand(0,6.28)}));
+function questionMark(x,y,z){const col=hex('#e3ffff');const seg=[[-.16,-.19,.25,.045],[.15,-.1,.045,.2],[.04,.02,.22,.045],[-.055,.12,.045,.18],[-.055,.32,.055,.055]];for(let [dx,dz,w,d]of seg)box(x+dx,y,z+dz,w,.023,d,col,1);}
+function drawBrick(k,t){const col=palette[k.domain],pulse=k.quiz?.72+.22*Math.sin(t*3+k.x):.2;const lift=.41+Math.sin(t*1.3+k.x*.3+k.z)*.027;box(k.x,.079,k.z,k.w+.1,.025,k.d+.13,hex('#030912'));bevel(k.x,lift,k.z,k.w,.66,k.d,k.hit>0?[.8,.92,1]:col,0,0,.105);box(k.x,lift+.332,k.z,k.w-.3,.018,k.d-.21,k.hp>1?hex('#233045'):col,k.quiz?.3:.12);box(k.x,lift+.06,k.z+k.d/2+.006,k.w-.31,.055,.024,col,.95);box(k.x,lift+.34,k.z-k.d/2+.11,k.w-.25,.025,.035,col,.98);
+if(k.quiz){questionMark(k.x,lift+.36,k.z-.025);box(k.x-k.w/2+.05,lift+.35,k.z,.022,.025,k.d-.18,cyan,pulse);box(k.x+k.w/2-.05,lift+.35,k.z,.022,.025,k.d-.18,cyan,pulse);}else if(k.hp>1){for(let x of [-.45,.45])box(k.x+x,lift+.37,k.z,.075,.034,k.d-.24,hex('#b1c7d6'),.1);}else{for(let j=0;j<3;j++)box(k.x-.43+j*.12,lift+.354,k.z+.19,.055,.022,.15,hex('#1a2a3a'));box(k.x+.48,lift+.355,k.z+.16,.07,.028,.08,col,.93);}}
+function render(t,dt){const aspect=width/height,mobile=aspect<.8,dist=mobile?Math.max(1,.78/aspect):aspect<1.2?1.14:1;let ex=0,ey=26*dist,ez=21.5*dist,tx=0,tz=-1.2;
+if(S.mode==='menu'){if(!mobile){ex=Math.sin(t*.17)*1.2;tx=-3.2;ey*=.98;}else{ey*=1;tz=1.1;}}if(motion&&shake>0){ex+=rand(-shake,shake);ey+=rand(-shake,shake)*.6;}eye=[ex,ey,ez];vp=mul(perspective(.76,aspect,.1,200),look(eye,[tx,0,tz]));paddleScreen=[project([-PX,0,PZ])[0],project([PX,0,PZ])[0]];
+vertices=[];for(let k of S.bricks){if(k.hp>0){const lit=k.hit>0;if(!k.mesh||k.meshHP!==k.hp||k.meshLit!==lit){const saved=vertices;vertices=[];drawBrick(k,0);k.mesh=new Float32Array(vertices);k.meshHP=k.hp;k.meshLit=lit;vertices=saved;}vertices.push(...k.mesh);}if(S.mode==='play')k.hit=Math.max(0,k.hit-dt);}let px=S.px,pw=paddleWidth();if(S.mode==='menu')px=Math.sin(t*.6)*3.1;const paddleCol=S.buff.narrow>0?pink:cyan;
+// Shield skimmer: chamfered titanium hull, layered deck, plasma wings, engine ports.
+box(px,.085,PZ,pw+.2,.04,.92,hex('#02080c'));bevel(px,.37,PZ,pw,.62,.72,hex('#95b5c7'),0,0,.15);bevel(px,.73,PZ-.04,pw*.61,.21,.46,hex('#163b58'));box(px,.865,PZ-.04,pw*.42,.023,.12,paddleCol,.8);box(px,.44,PZ-.377,pw-.33,.09,.035,paddleCol,1);for(let side of [-1,1]){bevel(px+side*(pw/2-.13),.54,PZ,.34,.43,.99,hex('#33566b'));box(px+side*(pw/2-.13),.79,PZ,.17,.02,.59,paddleCol,1);box(px+side*pw*.3,.24,PZ+.4,.3,.22,.11,paddleCol,.95);for(let j=0;j<3;j++)box(px+side*(pw*.28-j*.1),.79,PZ+.12,.04,.022,.13,hex('#b3c5d0'));}ring(px,.072,PZ,.9,.025,paddleCol,.34,32);
+if(S.boss?.hp>0){const b=S.boss;box(b.x,.1,b.z,2.8,.035,1.7,hex('#070713'));bevel(b.x,.65,b.z,2.7,1.1,1.15,b.hit>0?gold:hex('#5b2d58'),0,0,.2);sphere(b.x,1.51,b.z,.58,b.hit>0?gold:pink,.6,16,10);ring(b.x,1.5,b.z,.85,.07,pink,1,44,t,5.25);ring(b.x,1.75,b.z,.71,.04,cyan,.95,36,-t,4.7);for(let j=0;j<4;j++){let a=t*.6+j*Math.PI/2;box(b.x+Math.cos(a)*1.13,1.14,b.z+Math.sin(a)*.65,.21,.24,.3,pink,.8,a);}box(b.x,.8,b.z+.62,2.1,.06,.04,pink,.95);}
+for(const b of S.balls){const bx=b.attached?px:b.x,bz=b.attached?PZ-.72:b.z,col=S.buff.slow>0?hex('#b397ff'):gold;if(!b.attached){for(let i=b.trail.length-1;i>0;i--){let p=b.trail[i],q=b.trail[i-1],f=(1-i/b.trail.length);line3([p[0],.3,p[1]],[q[0],.3,q[1]],.03+f*.27,col.map(x=>x*(.25+.5*f)),.85);}}ring(bx,.066,bz,.32,.045,col,.45,18);sphere(bx,.38,bz,R,col,1,12,8);sphere(bx-.065,.5,bz+.06,R*.42,[1,1,.94],1,8,5);
+if(b.attached){for(let j=0;j<10;j++)box(bx,.06,bz-.6-j*.36,.035,.025,.14,cyan,.55-j*.035);}}
+if(S.mode==='menu'){const x=Math.cos(t*.9)*5,z=2+Math.sin(t*.9)*4;for(let i=0;i<11;i++){const a=t*.9-i*.035;sphere(Math.cos(a)*5,.4,2+Math.sin(a)*4,.17*(1-i/14),gold.map(v=>v*(1-i/16)),.9,6,4);}sphere(x,.4,z,.24,gold,1);}
+for(let p of powerups){let col=p.type==='shield'?gold:p.type==='laser'?pink:cyan;ring(p.x,.12,p.z,.43,.035,col,.8,18);bevel(p.x,.66+Math.sin(t*5)*.08,p.z,.63,.47,.63,col,.3,p.spin,.1);box(p.x,.97,p.z,.31,.027,.09,[.94,1,1],1,p.spin);if(p.type==='multi'){sphere(p.x-.22,1.1,p.z,.09,[1,1,1],1,6,4);sphere(p.x+.22,1.1,p.z,.09,[1,1,1],1,6,4);}if(p.type==='shield')box(p.x,.99,p.z,.09,.027,.32,[1,1,1],1,p.spin);}
+for(let l of lasers){box(l.x,.55,l.z,.06,.05,.85,cyan,1);box(l.x,.58,l.z,.025,.06,.8,[.9,1,1],1);}
+for(let p of particles){if(S.mode==='play'||S.mode==='end'){p.life-=dt;p.x+=p.vx*dt;p.y+=p.vy*dt;p.z+=p.vz*dt;p.vy-=10*dt;p.rot+=dt*5;}if(p.life>0)box(p.x,Math.max(.1,p.y),p.z,p.size,p.size,p.size*1.6,p.col.map(v=>v*Math.min(1,p.life*3)),.8,p.rot);}particles=particles.filter(p=>p.life>0);
+for(let r of ripples){if(S.mode==='play'||S.mode==='end'){r.life-=dt;r.r+=dt*(r.pulse?22:4.5);}if(r.life>0)ring(r.x,.105,r.z,r.r,r.pulse?.12:.026,r.col.map(v=>v*Math.min(1,r.life*2)),.95,r.pulse?70:32);}ripples=ripples.filter(r=>r.life>0);
+
+let dynamicCount=vertices.length/10;gl.bindBuffer(gl.ARRAY_BUFFER,dynamicBuffer);gl.bufferData(gl.ARRAY_BUFFER,new Float32Array(vertices),gl.DYNAMIC_DRAW);
+gl.bindFramebuffer(gl.FRAMEBUFFER,targets[0].fb);gl.viewport(0,0,width,height);gl.enable(gl.DEPTH_TEST);gl.disable(gl.BLEND);gl.clearColor(.017,.032,.061,1);gl.clear(gl.COLOR_BUFFER_BIT|gl.DEPTH_BUFFER_BIT);gl.useProgram(main);gl.uniformMatrix4fv(loc.vp,false,vp);gl.uniform3fv(loc.eye,eye);gl.uniform1f(loc.time,t);
+function drawBuffer(buffer,count){gl.bindBuffer(gl.ARRAY_BUFFER,buffer);for(let [key,size,offset]of [['p',3,0],['n',3,12],['c',3,24],['e',1,36]]){gl.enableVertexAttribArray(loc[key]);gl.vertexAttribPointer(loc[key],size,gl.FLOAT,false,40,offset);}gl.drawArrays(gl.TRIANGLES,0,count);}drawBuffer(staticBuffer,staticCount);drawBuffer(dynamicBuffer,dynamicCount);
+for(let k of ['p','n','c','e'])gl.disableVertexAttribArray(loc[k]);gl.disable(gl.DEPTH_TEST);gl.useProgram(post);gl.bindBuffer(gl.ARRAY_BUFFER,screenBuffer);gl.enableVertexAttribArray(pl.a);gl.vertexAttribPointer(pl.a,2,gl.FLOAT,false,0,0);gl.uniform1i(pl.tex,0);gl.uniform1i(pl.bloom,1);gl.uniform1f(pl.strength,quality==='low'?.42:.88);
+function pp(dest,tex,pass,dx,dy){gl.bindFramebuffer(gl.FRAMEBUFFER,dest?.fb||null);gl.viewport(0,0,dest?.w||width,dest?.h||height);gl.activeTexture(gl.TEXTURE0);gl.bindTexture(gl.TEXTURE_2D,tex);gl.uniform1f(pl.pass,pass);gl.uniform2f(pl.delta,dx,dy);gl.drawArrays(gl.TRIANGLES,0,6);}gl.activeTexture(gl.TEXTURE1);gl.bindTexture(gl.TEXTURE_2D,targets[0].tex);pp(targets[1],targets[0].tex,0,2.4/targets[1].w,0);pp(targets[2],targets[1].tex,1,0,2.4/targets[1].h);gl.activeTexture(gl.TEXTURE1);gl.bindTexture(gl.TEXTURE_2D,targets[2].tex);pp(null,targets[0].tex,2,0,0);gl.disableVertexAttribArray(pl.a);
+}
+// ---------- input & lifecycle ----------
+function movePointer(e){if(S.mode!=='play')return;const [a,b]=paddleScreen;S.target=clamp((e.clientX-a)/(b-a)*PX*2-PX,-PX,PX);}
+cv.addEventListener('pointerdown',e=>{if(S.mode!=='play')return;initAudio();cv.setPointerCapture(e.pointerId);pointerStart={x:e.clientX,y:e.clientY,moved:false};movePointer(e);});
+cv.addEventListener('pointermove',e=>{if(e.pointerType==='mouse'||pointerStart){movePointer(e);if(pointerStart&&Math.hypot(e.clientX-pointerStart.x,e.clientY-pointerStart.y)>10)pointerStart.moved=true;}});
+cv.addEventListener('pointerup',()=>{if(pointerStart&&!pointerStart.moved)launch();pointerStart=null;});cv.addEventListener('pointercancel',()=>pointerStart=null);
+window.addEventListener('keydown',e=>{if(e.target.matches('input,select'))return;if(['Space','ArrowLeft','ArrowRight','ArrowUp','ArrowDown'].includes(e.code))e.preventDefault();if(S.mode==='play'){if(e.code==='ArrowLeft'||e.code==='KeyA')left=true;if(e.code==='ArrowRight'||e.code==='KeyD')right=true;if(e.code==='Space'&&!e.repeat){if(S.balls.some(b=>b.attached))launch();else pulse();}}if((e.code==='KeyP'||e.code==='Escape')&&!e.repeat){if(S.mode==='settings')closeSettings();else pause();}if(e.code==='KeyM'&&!e.repeat)toggleSound();
+// Keep keyboard focus inside an open game dialog.
+if(e.code==='Tab'){let overlay=[...document.querySelectorAll('.overlay')].find(el=>!el.hidden);if(overlay){let focusable=[...overlay.querySelectorAll('button,select,input')].filter(el=>!el.hidden&&!el.disabled&&!el.closest('[hidden]'));if(focusable.length){let i=focusable.indexOf(document.activeElement);if(e.shiftKey&&i<=0){e.preventDefault();focusable.at(-1).focus();}else if(!e.shiftKey&&i===focusable.length-1){e.preventDefault();focusable[0].focus();}}}}});
+window.addEventListener('keyup',e=>{if(e.code==='ArrowLeft'||e.code==='KeyA')left=false;if(e.code==='ArrowRight'||e.code==='KeyD')right=false;});window.addEventListener('blur',()=>{left=right=false;if(S.mode==='play')pause();});document.addEventListener('visibilitychange',()=>{if(document.hidden){left=right=false;if(S.mode==='play')pause();if(ac)ac.suspend().catch(()=>{});}else{last=performance.now();}});
+$('startBtn').onclick=startRun;$('retryBtn').onclick=startRun;$('restartBtn').onclick=startRun;$('menuBtn').onclick=toMenu;$('endMenu').onclick=toMenu;$('pauseBtn').onclick=pause;$('resumeBtn').onclick=()=>{initAudio();pause();};$('launch').onclick=launch;$('pulseBtn').onclick=pulse;$('quizContinue').onclick=quizContinue;
+$('answers').querySelectorAll('button').forEach(b=>b.onclick=()=>answer(+b.dataset.answer));$('language').onchange=e=>{lang=e.target.value;savePrefs();translate();};
+function toggleSound(){sound=!sound;updateSound();savePrefs();if(sound)initAudio();else if(ac)ac.suspend().catch(()=>{});}$('soundBtn').onclick=toggleSound;
+function openSettings(){if(!['play','menu','pause'].includes(S.mode))return;settingsReturn=S.mode;setOverlay('settings','settings');}function closeSettings(){if(S.mode!=='settings')return;S.mode=settingsReturn;hideOverlays();if(S.mode==='menu')$('menu').hidden=false;if(S.mode==='pause')$('pause').hidden=false;if(S.mode==='play')initAudio();updateHUD();}$('settingsBtn').onclick=openSettings;$('closeSettings').onclick=closeSettings;
+$('quality').onchange=e=>{quality=e.target.value;resize();savePrefs();};$('motion').onchange=e=>{motion=e.target.checked;savePrefs();};$('audioSetting').onchange=e=>{sound=e.target.checked;updateSound();savePrefs();if(sound)initAudio();else if(ac)ac.suspend().catch(()=>{});};
+$('endlessBtn').onclick=()=>{S.endless=true;S.lives=Math.min(5,S.lives+1);S.stage++;S.mode='play';hideOverlays();buildStage();initAudio();toast(tr('launchHint'));};
+window.addEventListener('resize',resize);cv.addEventListener('webglcontextlost',e=>{e.preventDefault();if(S.mode==='play')pause();$('error').hidden=false;$('error').querySelector('h2').textContent='Graphics interrupted';$('error').querySelector('p').textContent='Reload the game to restore the 3D arena. Your saved high score is safe.';});cv.addEventListener('webglcontextrestored',()=>location.reload());
+function frame(now){requestAnimationFrame(frame);let dt=Math.min(.034,Math.max(.001,(now-last)/1000));last=now;if(document.hidden)return;clock+=dt;if(S.mode==='play')tick(dt);music(clock);if(toastTime>0){toastTime-=dt;if(toastTime<=0)$('toast').style.opacity=0;}shake=Math.max(0,shake-dt*2);flash=Math.max(0,flash-dt);$('flash').style.opacity=motion?Math.min(.45,flash):0;const combo=$('combo');combo.style.opacity=S.combo>=3&&S.comboTime>0?1:0;if(S.combo>=3){combo.innerHTML=S.combo+'<span>COMBO · ×'+(1+Math.min(4,Math.floor(S.combo/5)))+'</span>';}if(clock-lastHud>.15){lastHud=clock;updateHUD();}render(clock,dt);}
+try{S=seedState();makeArena();resize();buildStage();translate();$('pauseBtn').disabled=true;requestAnimationFrame(frame);}catch(e){console.error(e);$('error').hidden=false;}
+})();
+
+</script></body></html>
